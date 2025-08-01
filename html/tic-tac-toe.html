@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>井字棋 4×4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: sans-serif;
+      background: url('assets/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    h1 {
+      margin-bottom: 10px;
+      color: white;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      font-size: 1.8rem;
+      text-align: center;
+    }
+    
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      width: 100%;
+      max-width: 400px; /* 限制棋盘宽度，避免太宽 */
+      aspect-ratio: 1 / 1;
+      margin-top: 15px;
+      max-height: 90vh; /* 使用视口高度限制棋盘最大高度 */
+    }
+    
+    .cell {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      font-size: 4vw; /* 根据视口宽度调整字体大小 */
+      color: white;
+      text-align: center;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .cell:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+    
+    .winner {
+      background-color: rgba(94, 234, 212, 0.6) !important;
+      border-color: rgba(94, 234, 212, 0.9) !important;
+    }
+    
+    .status {
+      margin: 15px 0;
+      font-size: 1.1rem;
+      color: #fefefe;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+    
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    
+    button {
+      padding: 8px 16px;
+      font-size: 1rem;
+      border: none;
+      background: rgba(99, 102, 241, 0.85);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background: rgba(79, 70, 229, 0.95);
+    }
+    
+    label {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    
+    /* 移动端适配 */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+    
+      .status {
+        font-size: 1rem;
+      }
+    
+      .controls button {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
+    
+      .board {
+        max-width: 100%;
+        height: auto; /* 使棋盘在小屏幕上适应宽度 */
+      }
+    
+      .cell {
+        font-size: 8vw; /* 增大字体以适应较小的屏幕 */
+      }
+    }
+    
+    /* 大屏幕适配 */
+    @media (min-width: 1200px) {
+      .board {
+        max-width: 500px; /* 增大最大宽度，适应大屏幕 */
+      }
+    
+      .cell {
+        font-size: 2rem; /* 固定字体大小，避免过小 */
+      }
+    
+      h1 {
+        font-size: 2rem;
+      }
+    
+      .status {
+        font-size: 1.2rem;
+      }
+    
+      .controls button {
+        font-size: 1.1rem;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <h1>井字棋：4×4</h1>
+
+  <label>
+    <input type="checkbox" id="aiToggle" checked />
+    和 AI 对战
+  </label>
+
+  <div class="status" id="status">你是：X</div>
+  <div class="board" id="board"></div>
+
+  <div class="controls">
+    <button onclick="restartGame()">重新开始</button>
+    <button onclick="window.location.href='index.html'">返回主页</button>
+  </div>
+
+  <script>
+    const size = 4;
+    const winLength = 4;
+
+    const board = document.getElementById('board');
+    const status = document.getElementById('status');
+    const aiToggle = document.getElementById('aiToggle');
+
+    let cells = [];
+    let gameActive = true;
+    let player = 'X', ai = 'O';
+    let vsAI = true;
+
+    function createBoard() {
+      board.innerHTML = '';
+      cells = [];
+      for (let i = 0; i < size * size; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.addEventListener('click', () => handleClick(i));
+        board.appendChild(cell);
+        cells.push(cell);
+      }
+    }
+
+    function handleClick(index) {
+      if (!gameActive || cells[index].textContent !== '') return;
+
+      cells[index].textContent = player;
+
+      if (checkGameEnd(player)) return;
+
+      if (vsAI) {
+        setTimeout(aiMove, 300);
+      } else {
+        player = (player === 'X') ? 'O' : 'X';
+        status.textContent = `轮到 ${player}`;
+      }
+    }
+
+    function aiMove() {
+      if (!gameActive) return;
+
+      const emptyIndices = cells
+        .map((cell, idx) => cell.textContent === '' ? idx : null)
+        .filter(i => i !== null);
+
+      if (emptyIndices.length === 0) return;
+
+      const move = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      cells[move].textContent = ai;
+
+      checkGameEnd(ai);
+    }
+
+    function checkGameEnd(current) {
+      const win = getWinnerCombo(current);
+      if (win) {
+        win.forEach(i => cells[i].classList.add('winner'));
+        status.textContent = (current === player) ? '🎉 你赢了！' : (vsAI ? '😈 AI 赢了！' : `🎉 玩家 ${current} 赢了！`);
+        gameActive = false;
+        return true;
+      } else if (cells.every(cell => cell.textContent !== '')) {
+        status.textContent = '🤝 平局';
+        gameActive = false;
+        return true;
+      } else {
+        if (vsAI) {
+          status.textContent = (current === player) ? 'AI 正在思考...' : '轮到你了';
+        } else {
+          status.textContent = `轮到 ${player}`;
+        }
+        return false;
+      }
+    }
+
+    function getWinnerCombo(symbol) {
+      const get = (r, c) => r >= 0 && r < size && c >= 0 && c < size ? cells[r * size + c].textContent : null;
+
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (get(r, c) !== symbol) continue;
+
+          const directions = [
+            [[0, 1]], [[1, 0]], [[1, 1]], [[1, -1]]
+          ];
+
+          for (const dir of directions) {
+            let combo = [r * size + c];
+            for (let i = 1; i < winLength; i++) {
+              const nr = r + dir[0][0] * i;
+              const nc = c + dir[0][1] * i;
+              if (get(nr, nc) === symbol) {
+                combo.push(nr * size + nc);
+              } else break;
+            }
+            if (combo.length === winLength) return combo;
+          }
+        }
+      }
+      return null;
+    }
+
+    function restartGame() {
+      gameActive = true;
+      player = 'X';
+      vsAI = aiToggle.checked;
+      status.textContent = '你是：X';
+      createBoard();
+    }
+
+    aiToggle.addEventListener('change', () => {
+      vsAI = aiToggle.checked;
+      restartGame();
+    });
+
+    createBoard();
+  </script>
+</body>
+</html>

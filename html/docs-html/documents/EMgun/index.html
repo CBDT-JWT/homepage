@@ -1,0 +1,1219 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://www.jiangwt.org/documents/EMgun/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../circuitikz/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>手搓电磁炮概论 - CBDT的资料屋</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../themes/css/custom.css">
+    
+      <link rel="stylesheet" href="../../themes/css/simpleLightbox.min.css">
+    
+      <link rel="stylesheet" href="../../themes/css/pied_piper.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CBDT的资料屋" class="md-header__button md-logo" aria-label="CBDT的资料屋" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CBDT的资料屋
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              手搓电磁炮概论
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CBDT的资料屋" class="md-nav__button md-logo" aria-label="CBDT的资料屋" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CBDT的资料屋
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CBDT的资料屋
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Documents
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documents
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    手搓电磁炮概论
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    手搓电磁炮概论
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要 | 什么是电磁炮？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      理论分析
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      组成原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组成原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      功率回路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功率回路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      储能元件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      线圈
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      开关元件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      关断与半桥
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      充电回路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="充电回路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      限流电阻的选择
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      高压源的获取
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      简易组装
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      多级磁阻炮
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../circuitikz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Circuitikz入门指南：用LaTeX绘制精美电路图
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mkdocs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🚀 用 MkDocs 搭建专业美观的文档网站
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wanhuachi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用Arduino优雅地完成你的万花尺大作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Notes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/BigPhysics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    《大学物理A2》热学篇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/LinearAlgebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    《线性代数》期中参考讲义
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/LinearAlgebra2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    《线性代数》期末参考讲义
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要 | 什么是电磁炮？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      理论分析
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      组成原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组成原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      功率回路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功率回路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      储能元件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      线圈
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      开关元件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      关断与半桥
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      充电回路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="充电回路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      限流电阻的选择
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      高压源的获取
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      简易组装
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      多级磁阻炮
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">手搓电磁炮概论</h1>
+<div class="admonition note">
+<p class="admonition-title">发布说明</p>
+<p>本文已在公众号"无限之声"发表，作者江玮陶。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">免责声明</p>
+<p>本文内容具有一定危险性，请同学在实践尝试前学习相应专业知识，并不要超出学习研究的用途，更不能用于从事违反《中华人民共和国刑法》等的行为。充分预估风险，采取防范措施，杜绝盲目冒进，是任何科学技术实验都应该遵守的原则。内容仅适用于科学实验，严禁用于不正当用途，所有读者必须独立承担可能的后果。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">先修要求</p>
+<p><strong>《电子电路与系统基础》（1）</strong>(或类似课程)</p>
+</div>
+<h2 id="_2">引言</h2>
+<p><a href="https://mp.weixin.qq.com/s/2FpoenbarvH-pFYUdGP3Xw">硬设决赛</a>结束后，想必很多同学对出场的两台电磁炮印象十分深刻，并对其原理十分感兴趣呢？又或者是看了《某科学的超电磁炮》后，想用所学的 <strong>《电子电路与系统基础》</strong> 知识复刻炮姐的“名场面”？本文将简要介绍<strong>电磁炮</strong>的原理，相信读完本文后都会有所收获。
+<img alt="示例图片" src="../assets/image.png" style="display: block; margin: auto; width: 60%;" />
+从远古时期的标枪、弓箭到近代的枪械，大多利用弹丸的动能毁伤目标，统称动能武器。发明了动能武器，现代智人才得以高效获取生存和迁徙的资源。成为“万兽之王”以后，人类群体之间的斗争对动能武器提出了紧迫的需求。随着电气时代拉开巨幕，用电磁力为弹丸提供动能，取代延续数百年的化学动力武器，进入了人们的想象空间。</p>
+<p><img alt="笔者的电磁炮也有幸在决赛现场亮相" src="../assets/9cfcd580-35b1-4494-8f54-4bf3b6f48018.webp" style="display: block; margin: auto; width: 60%;" /></p>
+<p>电磁炮是一个<strong>宽口径、厚基础</strong>的领域。制作一台可以发射弹丸的模型很容易——只需要一卷漆包线，一只锂电池，一截铁棒就能验证它的原理。但是要想达到先进水平很难。一部可以称为“作品”的电磁炮，几乎囊括了工科的一半专业。</p>
+<h2 id="_3">概要 | 什么是电磁炮？</h2>
+<p>顾名思义，电磁炮就是利用电磁力推动物体加速的一种装置。按照形态，电磁炮可以分为<strong>轨道式</strong>和<strong>线圈式</strong>两种。前者原理较为简单，即利用<strong>安培力</strong><span class="arithmatex">\(\vec F=I\vec{l}\times \vec B\)</span> 将电枢加速。而后者根据动力的来源又可以分为<strong>磁阻式</strong>和<strong>感应式</strong>。磁阻式加速器类似一串级联的电磁铁，通过控制其通断时序，加速一个小铁棒；而感应式则利用<strong>楞次定律</strong>产生斥力推走被加速物。</p>
+<p>前文提到的<strong>TUOMF</strong>同学的电磁炮就属于感应式，而笔者才疏学浅，本文将仅仅围绕<strong>磁阻式</strong>电磁炮展开。</p>
+<h2 id="_4">理论分析</h2>
+<p>我们知道，一个内外径分别为 <span class="arithmatex">\(r_1\)</span>,<span class="arithmatex">\(r_2\)</span>，厚度 <span class="arithmatex">\(a\)</span> 的线圈，其轴线处磁场强度为：</p>
+<p><img alt="" src="../assets/c63f5284-a2c8-4f24-8fb7-eee59bbdc52f.webp" style="display: block; margin: auto; width: 60%;" /></p>
+<p>而空间某点的磁能密度可以表示为：</p>
+<div class="arithmatex">\[
+\omega=\frac{1}{2}\cdot \vec B\cdot \vec H
+\]</div>
+<p>从而根据虚功原理，结合我使用的钢销饱和磁感应强度大约为 <span class="arithmatex">\(1T\)</span> 不难得出其受力为：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+F&amp;=\frac{\partial W_磁}{\partial z}\\
+&amp;=\frac{\partial \iiint_V \omega dV}{\partial z}\\
+&amp;\approx \frac{\pi r^2 B_m(H_{front}-H_{rear})}{2}
+\end{aligned}
+\]</div>
+<p><img alt="虚功原理：假设发生位移，看看磁能变化" src="../assets/e333cdd5-ae5b-4e14-be97-9e0859c94310.webp" style="display: block; margin: auto; width: 60%;" /></p>
+<p>结合上述两式，列写一段简单的 python 代码可以画出磁场-位置和受力-位置曲线：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">bullet_len_mm</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="n">bullet_rad_mm</span> <span class="o">=</span> <span class="mi">8</span><span class="o">/</span><span class="mi">2</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Coil</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">innerRadius</span><span class="p">,</span> <span class="n">outerRadius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">innerRadius</span> <span class="o">=</span> <span class="n">innerRadius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outerRadius</span> <span class="o">=</span> <span class="n">outerRadius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">μ0</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">1e-7</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">HFieldCoil3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="n">L</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">a</span><span class="o">=</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">r2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outerRadius</span>
+        <span class="n">r1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">innerRadius</span>
+        <span class="n">R</span><span class="o">=</span><span class="n">r2</span><span class="o">-</span><span class="n">r1</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">logarithm</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pos</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pos</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">r2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span> <span class="o">/</span>
+                                  <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pos</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">r1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">r1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">*</span><span class="n">current</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">*</span><span class="n">R</span><span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">logarithm</span><span class="p">(</span><span class="n">z</span><span class="o">+</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="n">logarithm</span><span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">a</span><span class="p">))</span>
+<span class="n">coil</span> <span class="o">=</span> <span class="n">Coil</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">23.4</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="mf">12.4</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="mi">40</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">current</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">xx</span><span class="o">=</span><span class="p">[</span> <span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)]</span>
+<span class="n">yy</span><span class="o">=</span><span class="p">[</span> <span class="n">coil</span><span class="o">.</span><span class="n">HFieldCoil3</span><span class="p">(</span> <span class="n">current</span><span class="p">,</span> <span class="n">x</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span>   <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">]</span>
+<span class="n">Fyy</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)):</span>
+    <span class="n">Fyy</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">coil</span><span class="o">.</span><span class="n">HFieldCoil3</span><span class="p">(</span> <span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">bullet_len_mm</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span>
+                <span class="o">-</span><span class="n">coil</span><span class="o">.</span><span class="n">HFieldCoil3</span><span class="p">(</span> <span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">bullet_len_mm</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">))</span>
+               <span class="o">*</span><span class="p">(</span><span class="n">bullet_rad_mm</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39; H field&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x (mm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;H (A/m)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">Fyy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39; force&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x (mm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;F (N)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>绘图效果：</p>
+<p><img alt="红色为磁场-位置，蓝色为磁力-位置" src="../assets/80ebe5e5-6b38-40d2-a56f-5ead3b738c09.webp" style="display: block; margin: auto; width: 60%;" /></p>
+<p>因此，为了尽量提高加速度，只要巧妙控制各级线圈的通断时间，使得线圈导通期间炮弹恰好位于加速度最大的“峰”上。
+<img alt="也就是画了颜色的部分" src="../assets/a4afa8b4-94b1-4026-a015-da90f3932052.webp" style="display: block; margin: auto; width: 60%;" />
+<em>略过上述内容并不会对我们后续的学习产生太大影响</em> ，下面我们简单介绍如何组成一台具体的电磁炮。</p>
+<h2 id="_5">组成原理</h2>
+<p>制作一台电磁炮需要哪些部件和模块呢？首先，可以将电气结构拆解为<strong>功率回路</strong>和<strong>充电回路</strong>。</p>
+<h3 id="_6">功率回路</h3>
+<p>功率回路的主要功能为使用脉冲电源为线圈供电。因此，不难想到使用<strong>电容放电</strong>作为这一脉冲电源，通过一个开关为线圈供电：</p>
+<p><img alt="简易单级磁阻炮的实现" src="../assets/661de260-a111-4d2d-9026-0df112e7e3f4.webp" style="display: block; margin: auto; width: 60%;" /></p>
+<p>开关闭合后，电容的电能将通过导线对线圈放电，进而产生磁力拉动炮弹。随着放电继续，电容电压逐渐衰减到 $ 0 $,而炮弹也被发射出去了。</p>
+<p>因此，我们便知道了功率回路主要由以下元件组成：</p>
+<ul>
+<li>储能元件，比如电容</li>
+<li>开关元件</li>
+<li>线圈</li>
+</ul>
+<h4 id="_7">储能元件</h4>
+<p>储能元件相对容易解决，只要打开淘宝购买一个指标足够的电容即可。</p>
+<h4 id="_8">线圈</h4>
+<p>线圈也很好获得，在炮管上徒手绕制即可。</p>
+<h4 id="_9">开关元件</h4>
+<p>这是限制电磁炮性能的关键。一般而言，可以分为机械和电子两类。机械开关，如石墨触点、空气开关等等，往往可以承受很高的电流，但不能够实现自动控制；而电子开关主要为各种晶体管的开关抽象（如<strong>MOSFET</strong>和<strong>IGBT</strong>等），~~详情请移步 <strong>《电子电路与系统基础》</strong> 课堂~~。</p>
+<p><img alt="《电子电路与系统基础》 课介绍的受控开关抽象" src="../assets/4f275bdf-576c-4dc1-9093-a270182b6212.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>在各大电商平台可以以相对划算的价格购买到大功率管子，以下为笔者常用的几款管子，供读者参考：</p>
+<table>
+<thead>
+<tr>
+<th>型号</th>
+<th>类型</th>
+<th>最大电流/kA</th>
+<th>最大电压/kV</th>
+<th>参考单价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>70TPS16</td>
+<td>SCR</td>
+<td>1.4</td>
+<td>1.6</td>
+<td>6.50</td>
+</tr>
+<tr>
+<td>70TPS12</td>
+<td>SCR</td>
+<td>1.4</td>
+<td>1.2</td>
+<td>5.00</td>
+</tr>
+<tr>
+<td>AUIRGPS4070D</td>
+<td>IGBT</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>15.00</td>
+</tr>
+</tbody>
+</table>
+<p>需要注意的是，使用<strong>SCR</strong>作为开关管可能会出现无法关断的问题，也就是在开关导通后电流会一直存在直至衰减到零，此时电路相当于一个具有初值的二阶 RLC 电路，~~可以使用我最喜欢的五要素法进行分析~~。</p>
+<p><img alt="《电子电路与系统基础》课介绍的五要素法" src="../assets/56e2b9b2-6831-43e2-a8f2-29cd35f5dc2e.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>这样的电路实现固然方便，但可能会出现这样一个问题：炮弹经过了线圈的中心，但还是导通着，导致受力变为负数，也就是出现了反拉现象。</p>
+<p><img alt="在红色区域导通，会出现反拉，这不好。" src="../assets/48517b9e-c096-431d-bc99-fe8325feaff7.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>如何解决呢？方法一是从选型上改善，也就是通过计算 RLC 电路的元件参数，设计出一个恰好在合适时机衰减到零的组合，但是这对于 <strong>《电子电路与系统基础》</strong> 学得不好的笔者显然是太难了。因此笔者决定采用方法二：想办法把开关断开。</p>
+<h4 id="_10">关断与半桥</h4>
+<p>如何实现关断呢？如果仅仅是把开关断开，由于线圈具有电感，会存储磁能，当断开开关后会造成一个冲激电压，损坏电路中的极性元件。回忆<strong>《电子电路与系统基础》</strong>课，不难想起好的解决方案：</p>
+<p><img alt="" src="../assets/1ff1b6e0-df69-4437-81ad-9027a6853010.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p><img alt="《电子电路与系统基础》课介绍的续流二极管" src="../assets/b99784d5-d19d-4025-bb8b-2f6d6371fc2e.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>只要使用一个续流二极管，就可以使得开关断开后产生的感生电动势被吸收。我们的电路图变成了：</p>
+<p><img alt="加了续流二极管的电路" src="../assets/ab53d105-3626-4557-a681-ffeeef69306d.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>开关断开后，电感与二极管组成回路，电感具有初值 <span class="arithmatex">\(I_{L0}\)</span>,二极管具有整流近似 <span class="arithmatex">\(v_D=0.7V\)</span>。我们类比<strong>《电子电路与系统基础》</strong>课程所学，进行分析发现：开关断开瞬间，电感电流全部加载到二极管上，形成放磁电压 <span class="arithmatex">\(-v_D\)</span>，该电压对电感放磁，短时内电感电流线性下降，放磁电压为 <span class="arithmatex">\(-v_D\)</span> 不变，放磁速率（斜率）不变，电感电流呈现出线性衰减规律。</p>
+<p><img alt="《电子电路与系统基础》课介绍的一阶时域分析，问：本模型与我们的L-D电路有什么区别（x" src="../assets/420d5cd8-82f5-42af-90e9-fc5761e1fd76.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>计算可得电流下降的规律：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+i_L(t)&amp;=\frac 1 L \int_{-\infty}^tv_L(\tau)d\tau\\
+&amp;=I_0+\frac 1 L \int_0^t-v_Dd\tau\\
+&amp;=I_0-\frac{v_D}{L}t
+\end{aligned}
+\]</div>
+<p>从而当经过了 <span class="arithmatex">\(t_0=\frac{LI_0}{v_D}\)</span> 时间后，电流衰减到 0，关断完成。</p>
+<p>那么有的同学就会问了，这磁能直接这么放掉太可惜了，有没有办法回收利用呢？答案是当然有，只要想办法让电流重新流进电容就可以了。这就要引入我最喜欢的半桥电路：</p>
+<p><img alt="半桥控制电路" src="../assets/57708369-2c43-436a-8aca-91dd52a33c29.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>电路工作主要有如下两个阶段：</p>
+<p><strong>导通阶段</strong>，<span class="arithmatex">\(S_1\)</span> 与 <span class="arithmatex">\(S_2\)</span> 同时导通，此时电容放电为电感充电；</p>
+<p><img alt="导通阶段" src="../assets/65b24d3c-4f4e-4b76-8d12-2a0d45b11ad5.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p><strong>续流阶段</strong>，<span class="arithmatex">\(S_1\)</span> 与 <span class="arithmatex">\(S_2\)</span> 同时关断，此时电感放电为电容充电；</p>
+<p><img alt="续流阶段" src="../assets/effa499d-c631-4f19-a0d9-ac9d1e9636de.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>这样设计电路，优势在于电感储存的磁能得以回收，提高了效率；而劣势在于，这样每级线圈便需要多一只管子，成本更高。实际应用中，本方案和上一种单管的方案都很常见。</p>
+<p>至此，我们利用<strong>《电子电路与系统基础》</strong>知识设计出了功率回路的拓扑结构。下面我们来研究充电回路。</p>
+<h3 id="_11">充电回路</h3>
+<p>为了提高我们制作的电磁炮的性能，拥有一个相对高的电压源是必要的。基于<strong>《电子电路与系统基础》</strong>课程所学，使用恒压源为电容充电时满足的规律为：</p>
+<p><img alt="《电子电路与系统基础》中介绍的电容充电分析" src="../assets/b912f040-5a3a-4691-bf11-6190e48fe8b0.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>不妨认为达到 <span class="arithmatex">\(3\tau\)</span> 即为电容充满。</p>
+<h4 id="_12">限流电阻的选择</h4>
+<p>电压源的一个重要参数即为最大输出功率.这决定了限流电阻 <span class="arithmatex">\(R\)</span> 的选择</p>
+<div class="arithmatex">\[
+\begin{aligned}
+  P_{s,out}(t)&amp;=V_{S0}\cdot i(t)\\
+  &amp;= V_{S0}\cdot \frac{V_{S0}-v_c(t)}{R}\\
+  &amp;\leq \frac{V_{S0}^2}{R}
+\end{aligned}
+\]</div>
+<p>比方说我们的输入为 12V、20A 的电源，输出为 350V，那么就需要</p>
+<div class="arithmatex">\[
+\begin{aligned}
+R&amp;\geq \frac{1}{\eta}\cdot\frac{V_{S0}^2}{V_{in}I_{in,max}}\\
+&amp;\approx 1k\Omega
+\end{aligned}
+\]</div>
+<h4 id="_13">高压源的获取</h4>
+<p>提到这个两三百伏的电压源，很多同学会想到利用<strong>《电子电路与系统基础》</strong>课程中学到的<em>全桥整流器</em> 将插座里的 220V 交流电变为直流电打到电容里面。然而，这是极其危险和不负责任的做法；如果在宿舍这么做，还可能以后再也上不了<strong>《电子电路与系统基础》</strong>了。</p>
+<p><img alt="《电子电路与系统基础》介绍的全桥整流器" src="../assets/da68ee0e-ffe9-4da5-9224-3b1ade2889af.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>因此我们需要一种把直流电转换为交流电的逆变电路，再通过变压和整流转换为直流电输进电容即可。这里推荐大家直接在淘宝购买成品的升压模块，当然学有余力的同学也可以尝试这样自己做：</p>
+<p><img alt="基于ZVS的简易逆变器" src="../assets/f3e491f7-b08c-46fd-a6da-30726e55fe38.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>如图为一个常见的逆变器，其中 <span class="arithmatex">\(V_{S0}=12V\)</span>, <span class="arithmatex">\(R_1=R_2=470\Omega\)</span>,<span class="arithmatex">\(R_3=R_4=10k\Omega\)</span>,<span class="arithmatex">\(L_1=100\mu H\)</span>, <span class="arithmatex">\(D_3,D_4\)</span> 为快恢复二极管, <span class="arithmatex">\(D_1,D_2\)</span> 为 12V 稳压二极管，<span class="arithmatex">\(Q_1 , Q_2\)</span> 为 IRFP250 型 NMOS，<span class="arithmatex">\(T\)</span> 为初级 <span class="arithmatex">\(3T+3T\)</span>,次级 <span class="arithmatex">\(600T\)</span> 变压器。具体原理想必读到这里的读者是十分熟悉的，便不再赘述。</p>
+<p>当然，我们自然希望能通过弱电控制这个逆变器提供电压，因此可以简单拓展如下：</p>
+<p><img alt="可控的ZVS" src="../assets/69e031f5-6b08-4329-99d2-4d804cb1bc35.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>我们简单上电测试一下，就能看到十分优美的输出波形：</p>
+<p><img alt="" src="../assets/8252c3d3-3058-48e5-8e5a-cad504214d4a.jpg" style="display: block; margin: auto; width: 60%;" /></p>
+<p><img alt="漂亮得很呐" src="../assets/454c2c00-732e-42b5-bf21-5f3e37573c2e.jpg" style="display: block; margin: auto; width: 60%;" /></p>
+<p>这样，就可以把 <span class="arithmatex">\(v_{ctrl}\)</span> 接到单片机的 GPIO 上控制了。</p>
+<p><em>略过上述内容并不会对我们后续学习产生太大影响</em>，如今具有升压功能的模块在电商平台上比比皆是，直接购买有时不失为更加省事也更加安全的方案。</p>
+<p>至此，我们已经可以做出一台极其简易的电磁炮 demo 了！</p>
+<h2 id="_14">简易组装</h2>
+<p>这里演示一台<strong>单级</strong>、<strong>带关断</strong>的手动磁阻炮的制作。</p>
+<p>我们的电路图为：</p>
+<p><img alt="简易的电磁炮电路图" src="../assets/f0d21c83-3fd4-4cd4-9c30-db8a347c0f62.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>连接电路，并测试。先接通 <span class="arithmatex">\(S_1\)</span>,待电容充满后，断开 <span class="arithmatex">\(S_1\)</span>, 确保炮口没有任何人或易碎品后，放入一枚炮弹，短暂接通 <span class="arithmatex">\(S_2\)</span>。若电路连接顺利，则此时炮弹就可以发射啦！</p>
+<h2 id="_15">多级磁阻炮</h2>
+<p>我们刚才制作的单级炮虽然顺利完成了任务，但实在效果堪忧。那么就有人想到，如果我把多个线圈级联起来，依次控制通断，不就能达到更好的性能了么？欸，于是你就发明了多级磁阻炮。</p>
+<p>多级磁阻炮的结构大概如下图，其技术点无非在于通断时机的控制上。</p>
+<p><img alt="多级磁阻炮大致原理图" src="../assets/d34efec4-623e-4a19-a26d-c1fcd5e25343.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>怎么知道什么时候导通、什么时候关断呢？有的同学可能提出了<strong>基于光电传感器的多级磁阻式电磁炮。</strong>，使用红外对管检测炮膛内子弹是否经过，一旦检测到经过，则导通。每一级的大致原理为：</p>
+<p><img alt="" src="../assets/7018495f-1e8c-446c-ad18-f6a4e7efa1d8.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>当有炮弹经过时候，会遮挡光电管，拉高可控硅电压，从而导致可控硅（抽象为开关）“导通”，进而线圈通电。</p>
+<p>除此之外，也可以采用单片机对各级开关进行时序控制，从而达到依次接通的效果。</p>
+<p>最后祝同学们实验顺利！</p>
+<p><img alt="" src="../assets/ce664066-1065-4a24-bd19-9d19c151ff00.png" style="display: block; margin: auto; width: 60%;" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+        <script src="../../themes/js/custom.js"></script>
+      
+        <script src="../../themes/js/simpleLightbox.min.js"></script>
+      
+        <script src="../../themes/js/optionalConfig.js"></script>
+      
+        <script src="../../themes/js/mermaidloader.js"></script>
+      
+        <script src="../../themes/js/umlconvert.js"></script>
+      
+        <script src="../../themes/js/mathjax.js"></script>
+      
+        <script src="../../themes/js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.17.1/flowchart.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/@mermaid-js/mermaid-mindmap@9.3.0/dist/diagram-definition.0faef4c2.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/markdown-it-plantuml@1.4.1/index.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-svg-full.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

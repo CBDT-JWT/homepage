@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CBDT的资料屋</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: url('assets/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 800px;
+      width: 100%;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      width: 100%;
+      backdrop-filter: blur(50px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin: 0 0 1rem 0;
+      font-size: 1.8rem;
+      color: #474747;
+      text-align: center;
+    }
+
+    h2 {
+      margin: 0 0 1rem 0;
+      font-size: 1.4rem;
+      color: #474747;
+    }
+
+    p, li {
+      color: #474747;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      margin: 10px auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    a {
+      color: #1c1c1c;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .changelog {
+      max-height: 250px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    .changelog h3 {
+      margin-top: 1em;
+      color: #474747;
+      font-size: 1.1rem;
+    }
+
+    .changelog ul {
+      padding-left: 1.5em;
+    }
+
+    .nav-button {
+      width: 100%;
+      max-width: 300px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      color: inherit;
+      margin: 20px auto;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-button:active {
+      transform: translateY(0);
+    }
+
+    .button-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      
+      .container {
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .glass-box {
+        max-width: 280px;
+        margin: 0 auto !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      
+      .container {
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .glass-box {
+        max-width: 250px;
+        padding: 1.5rem;
+        margin: 0 auto !important;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      h2 {
+        font-size: 1.25rem;
+        text-align: center;
+      }
+
+      p, li {
+        font-size: 1rem;
+      }
+
+      .nav-button {
+        max-width: 250px;
+        height: 55px;
+        padding: 0 15px;
+      }
+      
+      .button-text {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 5px;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      
+      .container {
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .glass-box {
+        max-width: 200px;
+        padding: 1rem;
+        margin: 0 auto !important;
+      }
+      
+      h1 {
+        font-size: 1.3rem;
+      }
+      
+      .nav-button {
+        max-width: 200px;
+        height: 50px;
+        padding: 0 12px;
+      }
+      
+      .button-text {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<script src="https://www.unpkg.com/mouse-firework@latest/dist/index.umd.js">
+
+</script>
+<script>
+    firework({
+  excludeElements: ["a"],
+  particles: [
+    {
+      shape: "circle",
+      move: "emit",
+      easing: "easeOutExpo",
+      colors: [
+        "rgba(255,182,185,.9)",
+        "rgba(250,227,217,.9)",
+        "rgba(187,222,214,.9)",
+        "rgba(138,198,209,.9)",
+      ],
+      number: 30,
+      duration: [1000,4000],
+      shapeOptions: {
+        radius: [5, 12],
+      },
+    },
+  ]
+});
+</script>
+  <div class="container">
+    <div class="glass-box">
+      <h1>CBDT的资料屋</h1>
+    </div>
+
+    <div class="glass-box">
+      <h2>关于作者</h2>
+      <p>一名普通的华清小学II学院学生罢了。</p>
+    </div>
+
+    <div class="glass-box">
+      <h2>关于这个网站</h2>
+      <p>这是我（建立）的个人网站,目前运行在我宿舍里的一台树莓派上。</p>
+      <img src="assets/server.jpg" alt="服务器">
+      <p>主要想要记录一下自己产生的一些东西吧，可能更多还是因为搞套自己的机器很好玩(x)</p>
+    </div>
+
+    <div class="glass-box">
+      <h2>我要如何帮忙？</h2>
+      <p>可以向 <a href="https://github.com/CBDT-JWT/EEnotes" target="_blank">我的 repo</a> 发起 PR，也可以邮件联系
+        <a href="mailto:wjiang0415@outlook.com">这个邮箱</a>。感谢您的帮忙和支持！！</p>
+    </div>
+
+    <div class="glass-box">
+      <h2>更新日志</h2>
+      <div class="changelog">
+        <h3>2025/5/9</h3>
+        <ul>
+          <li>移植了来自mdnice的文档</li>
+          <li>配置了mkdocs的主题</li>
+          <li>井字棋升级为4*4</li>
+        </ul>
+        <h3>2025/5/8</h3>
+        <ul>
+          <li>笔记功能上线，基于mkdocs</li>
+        </ul>
+        <h3>2025/5/7</h3>
+        <ul>
+          <li>手写了更加清爽的界面</li>
+        </ul>
+        <h3>2024/12/13</h3>
+        <ul>
+          <li>配置了自动联网脚本，基于开源项目 <a href="https://github.com/Berrysoft/tunet-rust" target="_blank">tunet-rust</a></li>
+          <li>更换了好看的主题</li>
+          <li>配置了公式显示</li>
+          <li>配置了证书，现在支持 <code>https</code></li>
+        </ul>
+        <h3>2024/12/11</h3>
+        <ul>
+          <li>硬件部署完成</li>
+        </ul>
+        <h3>2024/12/10</h3>
+        <ul>
+          <li>紫一有线网恢复，网站上线</li>
+          <li>配置了 <code>mkdocs</code> 基本环境</li>
+          <li>配置了相关脚本</li>
+          <li>上传介绍页、线代讲义、大物笔记</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href='/index.html' class="nav-button">
+      <div class="button-text">返回主页</div>
+    </a>
+  </div>
+
+</body>
+</html>

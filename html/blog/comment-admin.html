@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>评论管理 - Weitao Jiang</title>
+  <link rel="stylesheet" href="blog.css">
+  <style>
+    /* 评论管理页面特有样式 */
+    .comment-admin-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .comment-section {
+      background: #232526;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .comment-section h3 {
+      margin-bottom: 1.5rem;
+      color: #bfa940;
+      border-bottom: 2px solid #bfa940;
+      padding-bottom: 0.5rem;
+    }
+
+    .comment-item {
+      padding: 1.5rem;
+      background: #232526;
+      border-radius: 3px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #bfa940;
+      color: #fff;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .comment-info {
+      flex: 1;
+    }
+
+    .comment-author {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .comment-meta {
+      font-size: 0.9rem;
+      color: #fff;
+    }
+
+    .comment-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .comment-content {
+      color: #fff;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: #181818;
+      border-radius: 2px;
+      border: 1px solid #444;
+    }
+
+    .comment-post-link {
+      font-size: 0.9rem;
+      color: #bfa940;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .comment-post-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-small {
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 5px;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #bfa940;
+      color: #232526;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .filter-section {
+      background: #232526;
+      padding: 1rem;
+      border-radius: 3px;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 2px;
+      background: #181818;
+      color: #fff;
+    }
+
+    .no-comments {
+      text-align: center;
+      color: #fff;
+      font-style: italic;
+      padding: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .comment-admin-container {
+        padding: 1rem;
+      }
+      
+      .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .comment-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      
+      .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .stats-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <a href="../index.html" class="blog-logo">Weitao Jiang</a>
+      <ul class="blog-nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="index.html">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="admin.html" id="adminLink" style="display: none;">管理</a></li>
+        <li><a href="#" class="active" id="commentAdminLink">评论管理</a></li>
+        <li><a href="image-admin.html" id="imageAdminLink" style="display: none;">图片管理</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <div id="userInfo" class="user-info">
+          <span class="username" id="usernameSpan">👋 管理员</span>
+          <button class="logout-btn" onclick="handleLogout()">退出</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="comment-admin-container">
+    <div class="blog-hero">
+      <h1>💬 评论管理</h1>
+      <p>管理所有文章的评论和互动</p>
+    </div>
+
+    <div class="stats-summary">
+      <div class="stat-card">
+        <div class="stat-number" id="totalComments">0</div>
+        <div class="stat-label">总评论数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="todayComments">0</div>
+        <div class="stat-label">今日评论</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="recentComments">0</div>
+        <div class="stat-label">近7天评论</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="postsWithComments">0</div>
+        <div class="stat-label">有评论的文章</div>
+      </div>
+    </div>
+
+    <div class="comment-section">
+      <h3>📝 评论列表</h3>
+      
+      <div class="filter-section">
+        <div class="filter-row">
+          <label>筛选条件：</label>
+          <select id="postFilter" class="filter-select" onchange="filterComments()">
+            <option value="">所有文章</option>
+            <!-- 文章选项将动态加载 -->
+          </select>
+          <select id="dateFilter" class="filter-select" onchange="filterComments()">
+            <option value="">所有时间</option>
+            <option value="today">今天</option>
+            <option value="week">本周</option>
+            <option value="month">本月</option>
+          </select>
+          <button class="blog-btn blog-btn-secondary" onclick="refreshComments()">刷新</button>
+        </div>
+      </div>
+
+      <div id="commentsList">
+        <!-- 评论列表将在这里动态加载 -->
+      </div>
+    </div>
+  </div>
+
+  <script src="jwt-auth.js"></script>
+  <script src="blog-manager.js"></script>
+  <script>
+    let allComments = [];
+    let allPosts = [];
+    let filteredComments = [];
+
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // 检查权限
+        if (!window.authManager || !window.authManager.isLoggedIn() || !window.authManager.isAdmin()) {
+          alert('您没有访问评论管理的权限');
+          location.href = 'index.html';
+          return;
+        }
+        // 显示管理菜单
+        document.getElementById('adminLink').style.display = '';
+        document.getElementById('commentAdminLink').style.display = '';
+        document.getElementById('imageAdminLink').style.display = '';
+        // 确保BlogManager初始化
+        await blogManager.loadData();
+        // 加载数据
+        await loadCommentData();
+        // 更新UI
+        updateUIBasedOnAuth();
+      } catch (error) {
+        console.error('页面初始化失败:', error);
+        alert('页面初始化失败，请刷新重试');
+      }
+    });
+
+    // 加载评论数据
+    async function loadCommentData() {
+      try {
+        // 获取所有评论和文章
+        allComments = await blogManager.getAllComments();
+        allPosts = await blogManager.getAllPosts();
+        filteredComments = [...allComments];
+        
+        // 加载统计数据
+        updateStats();
+        
+        // 加载文章筛选选项
+        loadPostFilter();
+        
+        // 显示评论列表
+        displayComments();
+      } catch (error) {
+        console.error('加载评论数据失败:', error);
+      }
+    }
+
+    // 更新统计数据
+    function updateStats() {
+      const today = new Date().toLocaleDateString('zh-CN');
+      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleDateString('zh-CN');
+      
+      const todayComments = allComments.filter(comment => comment.date === today);
+      const recentComments = allComments.filter(comment => {
+        const commentDate = new Date(comment.date);
+        const weekAgoDate = new Date(weekAgo);
+        return commentDate >= weekAgoDate;
+      });
+      
+      const postsWithComments = new Set(allComments.map(comment => comment.postId)).size;
+      
+      document.getElementById('totalComments').textContent = allComments.length;
+      document.getElementById('todayComments').textContent = todayComments.length;
+      document.getElementById('recentComments').textContent = recentComments.length;
+      document.getElementById('postsWithComments').textContent = postsWithComments;
+    }
+
+    // 加载文章筛选选项
+    function loadPostFilter() {
+      const postFilter = document.getElementById('postFilter');
+      const defaultOption = postFilter.querySelector('option[value=""]');
+      
+      // 清空现有选项，保留默认选项
+      postFilter.innerHTML = '';
+      postFilter.appendChild(defaultOption);
+      
+      // 添加文章选项
+      allPosts.forEach(post => {
+        const option = document.createElement('option');
+        option.value = post.id;
+        option.textContent = post.title;
+        postFilter.appendChild(option);
+      });
+    }
+
+    // 筛选评论
+    function filterComments() {
+      const postFilter = document.getElementById('postFilter').value;
+      const dateFilter = document.getElementById('dateFilter').value;
+      
+      filteredComments = allComments.filter(comment => {
+        let matchPost = true;
+        let matchDate = true;
+        
+        // 按文章筛选
+        if (postFilter) {
+          matchPost = comment.postId == postFilter;
+        }
+        
+        // 按日期筛选
+        if (dateFilter) {
+          const commentDate = new Date(comment.date);
+          const today = new Date();
+          
+          switch (dateFilter) {
+            case 'today':
+              matchDate = comment.date === today.toLocaleDateString('zh-CN');
+              break;
+            case 'week':
+              const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+              matchDate = commentDate >= weekAgo;
+              break;
+            case 'month':
+              const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+              matchDate = commentDate >= monthAgo;
+              break;
+          }
+        }
+        
+        return matchPost && matchDate;
+      });
+      
+      displayComments();
+    }
+
+    // 显示评论列表
+    function displayComments() {
+      const commentsList = document.getElementById('commentsList');
+      
+      if (filteredComments.length === 0) {
+        commentsList.innerHTML = '<div class="no-comments">没有找到符合条件的评论</div>';
+        return;
+      }
+      
+      // 按日期倒序排序
+      const sortedComments = filteredComments.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+      
+      commentsList.innerHTML = sortedComments.map(comment => {
+        const post = allPosts.find(p => p.id == comment.postId);
+        const postTitle = post ? post.title : '未知文章';
+        
+        return `
+          <div class="comment-item">
+            <div class="comment-header">
+              <div class="comment-info">
+                <div class="comment-author">${comment.author}</div>
+                <div class="comment-meta">
+                  评论时间：${comment.date}
+                  ${comment.email ? ` | 邮箱：${comment.email}` : ''}
+                </div>
+              </div>
+              <div class="comment-actions">
+                <button class="blog-btn btn-small btn-danger" onclick="deleteComment(${comment.id}, '${comment.author}')">删除</button>
+              </div>
+            </div>
+            <div class="comment-content">${comment.content}</div>
+            <a href="post.html?id=${comment.postId}" class="comment-post-link" target="_blank">
+              文章：${postTitle} →
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 删除评论
+    async function deleteComment(commentId, author) {
+      if (!confirm(`确定要删除来自"${author}"的评论吗？此操作不可恢复！`)) {
+        return;
+      }
+      
+      try {
+        await blogManager.deleteComment(commentId);
+        alert('评论删除成功');
+        await refreshComments(); // 重新加载数据
+      } catch (error) {
+        console.error('删除评论失败:', error);
+        alert('删除评论失败，请重试');
+      }
+    }
+
+    // 刷新评论数据
+    async function refreshComments() {
+      try {
+        await loadCommentData();
+        alert('评论数据已刷新');
+      } catch (error) {
+        console.error('刷新评论数据失败:', error);
+        alert('刷新失败，请重试');
+      }
+    }
+
+    // 更新UI基于认证状态
+    function updateUIBasedOnAuth() {
+      const userInfo = document.getElementById('userInfo');
+      const usernameSpan = document.getElementById('usernameSpan');
+      
+      if (window.authManager && window.authManager.isLoggedIn()) {
+        const user = window.authManager.getCurrentUser();
+        if (user && usernameSpan) {
+          usernameSpan.textContent = `👋 ${user.username}`;
+        }
+      }
+    }
+
+    // 处理退出
+    function handleLogout() {
+      if (confirm('确定要退出登录吗？')) {
+        if (window.authManager) {
+          window.authManager.logout();
+          alert('已退出登录');
+          location.href = 'index.html';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

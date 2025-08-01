@@ -1,0 +1,78 @@
+{
+  "blogConfig": {
+    "title": "Weitao Jiang's Blog",
+    "description": "分享技术见解、生活感悟和学习心得",
+    "author": "Weitao Jiang",
+    "email": "wjiang0415@outlook.com",
+    "website": "jiangwt.org",
+    "github": "CBDT-JWT",
+    "language": "zh-CN",
+    "timezone": "Asia/Shanghai",
+    "postsPerPage": 6,
+    "categories": [
+      "技术",
+      "生活",
+      "学习",
+      "随想",
+      "项目",
+      "教程"
+    ],
+    "socialLinks": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/CBDT-JWT",
+        "icon": "💻"
+      },
+      {
+        "name": "Email",
+        "url": "mailto:wjiang0415@outlook.com",
+        "icon": "📧"
+      },
+      {
+        "name": "Website",
+        "url": "https://www.jiangwt.org",
+        "icon": "🌐"
+      }
+    ],
+    "theme": {
+      "primaryColor": "#667eea",
+      "secondaryColor": "#764ba2",
+      "backgroundColor": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    }
+  },
+  "posts": [
+    {
+      "id": 1,
+      "title": "Welcome to My Blog",
+      "excerpt": "欢迎来到我的博客！这里我会分享一些技术文章、学习心得和生活感悟。让我们一起成长，一起探索知识的海洋。",
+      "category": "生活",
+      "date": "2025-01-27",
+      "image": "📝",
+      "published": true,
+      "tags": ["博客", "欢迎", "介绍"],
+      "readTime": 3
+    },
+    {
+      "id": 2,
+      "title": "MkDocs 使用指南",
+      "excerpt": "MkDocs 是一个快速、简单、华丽的静态网站生成器，专门用于构建项目文档。本文将介绍如何使用 MkDocs 创建美观的文档网站。",
+      "category": "技术",
+      "date": "2025-01-26",
+      "image": "📚",
+      "published": true,
+      "tags": ["MkDocs", "文档", "教程"],
+      "readTime": 8
+    },
+    {
+      "id": 3,
+      "title": "Web 开发学习心得",
+      "excerpt": "分享我在学习 Web 开发过程中的一些心得体会，包括 HTML、CSS、JavaScript 的学习方法和实践经验。",
+      "category": "技术",
+      "date": "2025-01-25",
+      "image": "💻",
+      "published": true,
+      "tags": ["Web开发", "学习", "经验"],
+      "readTime": 6
+    }
+  ]
+}

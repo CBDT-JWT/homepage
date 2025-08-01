@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>写文章 - Weitao Jiang</title>
+  <link rel="stylesheet" href="blog.css">
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+  <!-- KaTeX JavaScript -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      min-height: 100vh;
+      color: #fff;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .write-container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      background: rgba(44,44,44,0.97);
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+    }
+    .blog-hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .blog-hero h1 {
+      color: #bfa940;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .blog-hero p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    .write-form {
+      margin-bottom: 2rem;
+    }
+    .form-section {
+      background: #232323;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      padding: 2rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .blog-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .blog-form-label {
+      color: #bfa940;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .blog-form-input, .blog-form-textarea, #contentEditor {
+      background: #181818;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .blog-form-input:focus, .blog-form-textarea:focus, #contentEditor:focus {
+      border: 1.5px solid #bfa940;
+    }
+    .cover-options {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .cover-option {
+      background: #292929;
+      color: #bfa940;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      border: 1.5px solid transparent;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .cover-option.active, .cover-option:hover {
+      background: #bfa940;
+      color: #232323;
+      border: 1.5px solid #bfa940;
+    }
+    .emoji-picker {
+      display: none;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0.5rem;
+      padding: 1rem;
+      border: 1px solid #bfa940;
+      border-radius: 10px;
+      background: #222;
+      max-height: 200px;
+      overflow-y: auto;
+      color: #bfa940;
+    }
+    .emoji-picker.show {
+      display: grid;
+    }
+    .emoji-item {
+      padding: 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1.5rem;
+      transition: background 0.2s;
+    }
+    .emoji-item:hover {
+      background: #bfa940;
+      color: #222;
+    }
+    .image-upload-area {
+      border: 2px dashed #bfa940;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 1rem;
+      background: #222;
+      color: #bfa940;
+    }
+    .upload-zone {
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: #bfa940;
+      background: rgba(191,169,64,0.08);
+    }
+    .upload-content {
+      color: #bfa940;
+    }
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .upload-hint {
+      font-size: 0.9rem;
+      color: #bfa940;
+      margin-top: 0.5rem;
+    }
+    .upload-progress {
+      padding: 1rem;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #bfa940;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .upload-preview {
+      padding: 1rem;
+      border: 1px solid #bfa940;
+      border-radius: 10px;
+      margin-top: 1rem;
+      background: #222;
+      color: #bfa940;
+    }
+    .preview-info {
+      margin-top: 1rem;
+    }
+    .editor-container {
+      border: 2px solid #bfa940;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #222;
+    }
+    .editor-toolbar {
+      background: #222;
+      padding: 0.5rem;
+      border-bottom: 1px solid #bfa940;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .toolbar-btn {
+      padding: 0.3rem 0.6rem;
+      border: 1px solid #bfa940;
+      background: #222;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #bfa940;
+      transition: background 0.2s, color 0.2s;
+    }
+    .toolbar-btn:hover, .toolbar-btn.active {
+      background: #bfa940;
+      color: #222;
+      border-color: #bfa940;
+    }
+    #contentEditor {
+      width: 100%;
+      min-height: 400px;
+      padding: 1rem;
+      border: none;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+      background: #222;
+      color: #fff;
+      border-radius: 0 0 10px 10px;
+    }
+    #contentEditor:focus {
+      outline: none;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .blog-btn, .blog-btn-primary, .blog-btn-secondary, .blog-btn-danger {
+      font-size: 1rem;
+      border-radius: 8px;
+      padding: 0.7rem 2.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .blog-btn-primary {
+      background: #bfa940;
+      color: #232323;
+    }
+    .blog-btn-primary:hover {
+      background: #b37a00;
+      color: #fff;
+    }
+    .blog-btn-secondary {
+      background: #292929;
+      color: #bfa940;
+      border: 1.5px solid #bfa940;
+    }
+    .blog-btn-secondary:hover {
+      background: #bfa940;
+      color: #232323;
+    }
+    .blog-btn-danger {
+      background: #dc3545;
+      color: #fff;
+    }
+    .blog-btn-danger:hover {
+      background: #a71d2a;
+      color: #fff;
+    }
+    .preview-container {
+      background: #232323;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      padding: 2rem 1.5rem;
+      margin-bottom: 2rem;
+      display: none;
+    }
+    /* KaTeX 样式优化 */
+    .katex {
+      color: #f3f3f3 !important;
+      font-size: 1.1em;
+    }
+    .katex-display {
+      margin: 1.5em 0;
+      text-align: center;
+    }
+    .katex .base {
+      color: #f3f3f3 !important;
+    }
+    .katex .mord {
+      color: #f3f3f3 !important;
+    }
+    .katex .mop {
+      color: #bfa940 !important;
+    }
+    .katex .mbin {
+      color: #FFD700 !important;
+    }
+    .katex .mrel {
+      color: #FFD700 !important;
+    }
+    .katex .mpunct {
+      color: #f3f3f3 !important;
+    }
+    @media (max-width: 768px) {
+      .write-container {
+        padding: 1rem;
+      }
+      .form-row {
+        flex-direction: column;
+      }
+      .action-buttons {
+        flex-direction: column;
+      }
+      .editor-toolbar {
+        padding: 0.3rem;
+      }
+      .toolbar-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <a href="../index.html" class="blog-logo">Weitao Jiang</a>
+      <ul class="blog-nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="index.html">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="admin.html" id="adminLink" style="display: none;">设置</a></li>
+        <li><a href="comment-admin.html" id="commentAdminLink" style="display: none;">评论</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <a href="#" id="loginBtn" onclick="handleLogin()" class="blog-btn blog-btn-primary">登录</a>
+        <div id="userInfo" class="user-info" style="display: none;">
+          <span class="username" id="usernameSpan">👋 用户</span>
+          <button class="logout-btn" onclick="handleLogout()">退出</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="write-container">
+    <div class="blog-hero">
+      <h1 id="pageTitle">✏️ 写新文章</h1>
+      <p>分享你的想法和见解</p>
+    </div>
+
+    <form class="write-form" onsubmit="handleSubmit(event)">
+      <div class="form-section">
+        <h3>📝 基本信息</h3>
+        <div class="form-row">
+          <div class="blog-form-group" style="flex: 2;">
+            <label class="blog-form-label">文章标题</label>
+            <input type="text" id="titleInput" class="blog-form-input" placeholder="请输入文章标题..." required>
+          </div>
+          <div class="blog-form-group" style="flex: 1;">
+            <label class="blog-form-label">分类</label>
+            <select id="categoryInput" class="blog-form-input" required>
+              <option value="">选择分类</option>
+              <option value="技术">技术</option>
+              <option value="生活">生活</option>
+              <option value="学习">学习</option>
+              <option value="思考">思考</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="blog-form-group">
+          <label class="blog-form-label">文章摘要</label>
+          <textarea id="excerptInput" class="blog-form-input" rows="3" placeholder="请输入文章摘要（可选）..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>🎨 封面设置</h3>
+        <div class="cover-options">
+          <div class="cover-option active" data-type="emoji">
+            <span>😀 表情符号</span>
+          </div>
+          <div class="cover-option" data-type="image">
+            <span>🖼️ 图片链接</span>
+          </div>
+        </div>
+        
+        <div id="emojiCoverSection">
+          <input type="text" id="emojiInput" class="blog-form-input" placeholder="点击选择表情符号..." readonly onclick="toggleEmojiPicker()">
+          <div id="emojiPicker" class="emoji-picker">
+            <!-- 表情符号将通过JavaScript动态生成 -->
+          </div>
+        </div>
+        
+        <div id="imageCoverSection" style="display: none;">
+          <div class="cover-input-group">
+            <input type="text" id="imageInput" class="blog-form-input" placeholder="请输入图片链接..." style="margin-bottom: 1rem;">
+            <div style="text-align: center; margin: 1rem 0; color: #666;">或者</div>
+            <div class="image-upload-area">
+              <div class="upload-zone" id="uploadZone">
+                <div class="upload-content">
+                  <div class="upload-icon">📷</div>
+                  <p>拖拽图片到此处，或点击选择文件</p>
+                  <p class="upload-hint">支持 JPG, PNG, GIF, WEBP 格式，最大 5MB</p>
+                  <input type="file" id="coverImageFileInput" accept="image/*" style="display: none;">
+                  <button type="button" class="blog-btn blog-btn-secondary" onclick="document.getElementById('coverImageFileInput').click()">选择图片</button>
+                </div>
+              </div>
+              <div class="upload-progress" id="uploadProgress" style="display: none;">
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText">上传中...</p>
+              </div>
+              <div class="upload-preview" id="uploadPreview" style="display: none;">
+                <img id="previewImage" src="" alt="预览" style="max-width: 200px; border-radius: 5px;">
+                <div class="preview-info">
+                  <p id="imageInfo">图片信息</p>
+                  <button type="button" class="blog-btn blog-btn-danger" onclick="removeUploadedImage()">移除图片</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>📖 文章内容</h3>
+        <div class="editor-container">
+          <div class="editor-toolbar">
+            <button type="button" class="toolbar-btn" onclick="insertText('**粗体**')" title="粗体">B</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('*斜体*')" title="斜体">I</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('`代码`')" title="代码">Code</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('## 标题')" title="标题">H2</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('### 子标题')" title="子标题">H3</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('- 列表项')" title="列表">List</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('[链接文字](链接地址)')" title="链接">Link</button>
+            <button type="button" class="toolbar-btn" onclick="insertImageDialog()" title="图片">Img</button>
+            <button type="button" class="toolbar-btn" onclick="insertText('> 引用文字')" title="引用">Quote</button>
+            <button type="button" class="toolbar-btn" onclick="insertInlineMath()" title="行内公式">$x$</button>
+            <button type="button" class="toolbar-btn" onclick="insertBlockMath()" title="块级公式">$$</button>
+            <button type="button" class="toolbar-btn" onclick="togglePreview()" id="previewBtn">预览</button>
+          </div>
+          <textarea id="contentEditor" class="blog-form-textarea" placeholder="在这里写下你的文章内容...支持 Markdown 语法" required></textarea>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a href="index.html" class="blog-btn btn-secondary">取消</a>
+        <button type="button" class="blog-btn btn-secondary" onclick="saveDraft()">保存草稿</button>
+        <button type="submit" class="blog-btn blog-btn-primary" id="submitBtn">发布文章</button>
+      </div>
+    </form>
+
+    <div id="previewContainer" class="preview-container">
+      <h3>📖 文章预览</h3>
+      <div id="previewContent" class="blog-content">
+        <!-- 预览内容将在这里显示 -->
+      </div>
+    </div>
+  </div>
+
+  <script src="jwt-auth.js"></script>
+  <script src="blog-manager.js"></script>
+  <script>
+    // 全局变量
+    let isEditMode = false;
+    let editingPostId = null;
+    let isPreviewMode = false;
+
+    // 表情符号数据
+    const emojis = [
+      '😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣',
+      '😊', '😇', '🙂', '😉', '😌', '😍', '🥰', '😘',
+      '😗', '😙', '😚', '😋', '😛', '😝', '😜', '🤪',
+      '🤨', '🧐', '🤓', '😎', '🤩', '🥳', '😏', '😒',
+      '📝', '📚', '💡', '🚀', '🌟', '🔥', '💯', '✨',
+      '🎯', '🎨', '🎭', '🎪', '🎡', '🎢', '🎠', '🎟',
+      '🌈', '🌊', '⭐', '🌙', '☀️', '⛅', '🌤', '⛈',
+      '❄️', '☃️', '⛄', '🌸', '🌺', '🌻', '🌹', '🌷'
+    ];
+
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // Debug: 检查所有localStorage的keys
+        console.log('🔍 localStorage内容检查:');
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          const value = localStorage.getItem(key);
+          console.log(`  ${key}: ${value ? value.substring(0, 50) + '...' : 'null'}`);
+        }
+        
+        // 确保认证管理器初始化
+        if (window.authManager) {
+          await window.authManager.waitForInit();
+        }
+        
+        // 检查权限
+        if (!window.authManager || !window.authManager.isLoggedIn()) {
+          alert('请先登录后再写文章');
+          location.href = 'index.html';
+          return;
+        }
+        
+        // 确保BlogManager初始化
+        await blogManager.loadData();
+        
+        // 初始化表情符号选择器
+        initEmojiPicker();
+        
+        // 初始化封面选择
+        initCoverSelection();
+        
+        // 检查是否是编辑模式
+        checkEditMode();
+        
+        // 初始化图片上传功能
+        initImageUpload();
+        
+        // 更新UI权限状态
+        updateUIBasedOnAuth();
+      } catch (error) {
+        console.error('页面初始化失败:', error);
+        alert('页面初始化失败，请刷新重试');
+      }
+    });
+
+    // 初始化表情符号选择器
+    function initEmojiPicker() {
+      const emojiPicker = document.getElementById('emojiPicker');
+      emojis.forEach(emoji => {
+        const emojiItem = document.createElement('div');
+        emojiItem.className = 'emoji-item';
+        emojiItem.textContent = emoji;
+        emojiItem.onclick = () => selectEmoji(emoji);
+        emojiPicker.appendChild(emojiItem);
+      });
+    }
+
+    // 初始化封面选择
+    function initCoverSelection() {
+      const coverOptions = document.querySelectorAll('.cover-option');
+      coverOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          // 移除其他选项的active状态
+          coverOptions.forEach(opt => opt.classList.remove('active'));
+          // 添加当前选项的active状态
+          this.classList.add('active');
+          
+          // 显示/隐藏对应的输入区域
+          const type = this.dataset.type;
+          if (type === 'emoji') {
+            document.getElementById('emojiCoverSection').style.display = 'block';
+            document.getElementById('imageCoverSection').style.display = 'none';
+          } else {
+            document.getElementById('emojiCoverSection').style.display = 'none';
+            document.getElementById('imageCoverSection').style.display = 'block';
+          }
+        });
+      });
+    }
+
+    // 初始化图片上传功能
+    function initImageUpload() {
+      const fileInput = document.getElementById('coverImageFileInput');
+      const uploadZone = document.getElementById('uploadZone');
+      const uploadProgress = document.getElementById('uploadProgress');
+      const uploadPreview = document.getElementById('uploadPreview');
+      
+      // 文件选择处理
+      fileInput.addEventListener('change', handleFileSelect);
+      
+      // 拖拽处理
+      uploadZone.addEventListener('dragover', handleDragOver);
+      uploadZone.addEventListener('dragleave', handleDragLeave);
+      uploadZone.addEventListener('drop', handleFileDrop);
+      uploadZone.addEventListener('click', () => fileInput.click());
+    }
+
+    // 处理文件选择
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        uploadImage(file);
+      }
+    }
+
+    // 处理拖拽悬停
+    function handleDragOver(event) {
+      event.preventDefault();
+      event.currentTarget.classList.add('dragover');
+    }
+
+    // 处理拖拽离开
+    function handleDragLeave(event) {
+      event.currentTarget.classList.remove('dragover');
+    }
+
+    // 处理文件拖拽放下
+    function handleFileDrop(event) {
+      event.preventDefault();
+      event.currentTarget.classList.remove('dragover');
+      
+      const files = event.dataTransfer.files;
+      if (files.length > 0) {
+        uploadImage(files[0]);
+      }
+    }
+
+    // 上传图片
+    async function uploadImage(file) {
+      // 验证文件类型
+      if (!file.type.startsWith('image/')) {
+        alert('请选择图片文件');
+        return;
+      }
+      
+      // 验证文件大小 (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('图片大小不能超过5MB');
+        return;
+      }
+      
+      // 检查认证token
+      const authToken = localStorage.getItem('authToken') || localStorage.getItem('jwt_token');
+      if (!authToken) {
+        alert('请先登录后再上传图片');
+        return;
+      }
+      
+      const uploadProgress = document.getElementById('uploadProgress');
+      const uploadPreview = document.getElementById('uploadPreview');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      
+      try {
+        // 显示进度条
+        uploadProgress.style.display = 'block';
+        uploadPreview.style.display = 'none';
+        
+        // 创建FormData
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        // 上传请求
+        const response = await fetch('/api/upload/image', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('上传失败');
+        }
+        
+        const result = await response.json();
+        
+        // 更新进度条
+        progressFill.style.width = '100%';
+        progressText.textContent = '上传完成！';
+        
+        // 显示预览
+        setTimeout(() => {
+          uploadProgress.style.display = 'none';
+          showImagePreview(result.url, file);
+          
+          // 自动填入图片链接
+          document.getElementById('imageInput').value = result.url;
+        }, 500);
+        
+      } catch (error) {
+        console.error('上传失败:', error);
+        alert('图片上传失败: ' + error.message);
+        uploadProgress.style.display = 'none';
+      }
+    }
+
+    // 显示图片预览
+    function showImagePreview(imageUrl, file) {
+      const uploadPreview = document.getElementById('uploadPreview');
+      const previewImage = document.getElementById('previewImage');
+      const imageInfo = document.getElementById('imageInfo');
+      
+      previewImage.src = imageUrl;
+      imageInfo.innerHTML = `
+        <strong>文件名:</strong> ${file.name}<br>
+        <strong>大小:</strong> ${(file.size / 1024).toFixed(2)} KB<br>
+        <strong>类型:</strong> ${file.type}
+      `;
+      
+      uploadPreview.style.display = 'block';
+    }
+
+    // 移除上传的图片
+    function removeUploadedImage() {
+      document.getElementById('uploadPreview').style.display = 'none';
+      document.getElementById('imageInput').value = '';
+      document.getElementById('coverImageFileInput').value = '';
+    }
+
+    // 检查编辑模式
+    function checkEditMode() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const editId = urlParams.get('edit');
+      
+      if (editId) {
+        isEditMode = true;
+        editingPostId = parseInt(editId);
+        loadPostForEdit(editingPostId);
+        document.getElementById('pageTitle').textContent = '📝 编辑文章';
+        document.getElementById('submitBtn').textContent = '更新文章';
+      }
+    }
+
+    // 加载文章用于编辑
+    async function loadPostForEdit(postId) {
+      try {
+        const post = await blogManager.getPostById(postId);
+        if (!post) {
+          alert('文章未找到');
+          location.href = 'index.html';
+          return;
+        }
+        
+        // 填充表单数据
+        document.getElementById('titleInput').value = post.title;
+        document.getElementById('categoryInput').value = post.category;
+        document.getElementById('excerptInput').value = post.excerpt || '';
+        document.getElementById('contentEditor').value = post.content;
+        
+        // 设置封面
+        if (post.cover) {
+          if (post.cover.type === 'image') {
+            document.querySelector('[data-type="image"]').click();
+            document.getElementById('imageInput').value = post.cover.value;
+          } else {
+            document.querySelector('[data-type="emoji"]').click();
+            document.getElementById('emojiInput').value = post.cover.value;
+          }
+        } else if (post.image) {
+          // 兼容旧格式
+          document.querySelector('[data-type="emoji"]').click();
+          document.getElementById('emojiInput').value = post.image;
+        }
+        
+      } catch (error) {
+        console.error('加载文章失败:', error);
+        alert('加载文章失败');
+        location.href = 'index.html';
+      }
+    }
+
+    // 更新UI基于认证状态
+    function updateUIBasedOnAuth() {
+      const adminLink = document.getElementById('adminLink');
+      const commentAdminLink = document.getElementById('commentAdminLink');
+      const loginBtn = document.getElementById('loginBtn');
+      const userInfo = document.getElementById('userInfo');
+      const usernameSpan = document.getElementById('usernameSpan');
+      
+      if (window.authManager && window.authManager.isLoggedIn()) {
+        // 用户已登录
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (userInfo) userInfo.style.display = 'flex';
+        
+        const user = window.authManager.getCurrentUser();
+        if (user && usernameSpan) {
+          usernameSpan.textContent = `👋 ${user.username}`;
+        }
+        
+        // 检查是否是管理员
+        if (window.authManager.isAdmin()) {
+          if (adminLink) adminLink.style.display = 'block';
+          if (commentAdminLink) commentAdminLink.style.display = 'block';
+        } else {
+          if (adminLink) adminLink.style.display = 'none';
+          if (commentAdminLink) commentAdminLink.style.display = 'none';
+        }
+      } else {
+        // 用户未登录，重定向到首页
+        alert('请先登录后再写文章');
+        location.href = 'index.html';
+      }
+    }
+
+    // 切换表情符号选择器
+    function toggleEmojiPicker() {
+      const picker = document.getElementById('emojiPicker');
+      picker.classList.toggle('show');
+    }
+
+    // 选择表情符号
+    function selectEmoji(emoji) {
+      document.getElementById('emojiInput').value = emoji;
+      document.getElementById('emojiPicker').classList.remove('show');
+    }
+
+    // 插入文本到编辑器
+    function insertText(text) {
+      const editor = document.getElementById('contentEditor');
+      const start = editor.selectionStart;
+      const end = editor.selectionEnd;
+      const value = editor.value;
+      
+      editor.value = value.substring(0, start) + text + value.substring(end);
+      editor.focus();
+      editor.setSelectionRange(start + text.length, start + text.length);
+    }
+
+    // 直接打开图片上传
+    function insertImageDialog() {
+      console.log('🎯 insertImageDialog 被调用');
+      
+      // 检查是否登录
+      const authToken = localStorage.getItem('authToken') || localStorage.getItem('jwt_token');
+      console.log('🔑 检查认证token:', authToken ? '存在' : '不存在');
+      
+      if (!authToken) {
+        console.log('❌ 未找到认证token');
+        alert('请先登录后再上传图片');
+        return;
+      }
+      
+      // 创建文件输入元素
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+      fileInput.style.display = 'none';
+      
+      console.log('📂 文件选择器已创建');
+      
+      fileInput.onchange = async function(e) {
+        console.log('📁 文件选择器事件触发', e.target.files);
+        const file = e.target.files[0];
+        if (file) {
+          console.log('📄 选择的文件:', file.name, file.type, file.size);
+          try {
+            // 验证文件类型
+            if (!file.type.startsWith('image/')) {
+              alert('请选择图片文件');
+              return;
+            }
+            
+            // 验证文件大小 (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+              alert('图片大小不能超过5MB');
+              return;
+            }
+            
+            // 显示上传中提示
+            const editor = document.getElementById('contentEditor');
+            const start = editor.selectionStart;
+            const loadingText = '![上传中...](uploading)';
+            insertText(loadingText);
+            
+            console.log('🚀 开始上传图片:', file.name, '大小:', (file.size/1024).toFixed(2), 'KB');
+            console.log('🔑 使用的token:', authToken.substring(0, 20) + '...');
+            
+            // 创建FormData
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            // 上传请求
+            const response = await fetch('/api/upload/image', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Authorization': `Bearer ${authToken}`
+              }
+            });
+            
+            console.log('📡 上传响应状态:', response.status, response.statusText);
+            
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.error('❌ 上传失败响应:', errorText);
+              throw new Error(`上传失败 (${response.status}): ${errorText}`);
+            }
+            
+            const result = await response.json();
+            console.log('✅ 上传成功:', result);
+            
+            // 替换loading文本为实际图片
+            const currentValue = editor.value;
+            const altText = file.name.split('.')[0];
+            const imageUrl = result.imageUrl || result.url;
+            const finalText = `![${altText}](${imageUrl})`;
+            
+            editor.value = currentValue.replace(loadingText, finalText);
+            editor.focus();
+            
+            alert(`图片上传成功！\n文件名: ${result.filename}\n大小: ${(file.size/1024).toFixed(2)} KB`);
+            
+          } catch (error) {
+            console.error('💥 上传错误:', error);
+            alert('图片上传失败: ' + error.message);
+            
+            // 移除loading文本
+            const currentValue = editor.value;
+            editor.value = currentValue.replace('![上传中...](uploading)', '');
+          }
+        } else {
+          console.log('❌ 没有选择文件');
+        }
+        
+        // 清理文件输入元素
+        document.body.removeChild(fileInput);
+      };
+      
+      // 添加到DOM并触发点击
+      document.body.appendChild(fileInput);
+      console.log('👆 触发文件选择器点击');
+      fileInput.click();
+    }
+
+    // 插入图片链接
+    function insertImageLink() {
+      const imageUrl = prompt("请输入图片链接:");
+      if (imageUrl) {
+        const altText = prompt("请输入图片描述(可选):", "图片");
+        insertText(`![${altText || '图片'}](${imageUrl})`);
+      }
+    }
+
+    // 插入行内数学公式
+    function insertInlineMath() {
+      const formula = prompt("请输入数学公式（不包含$符号）:", "E = mc^2");
+      if (formula !== null) {
+        insertText(`$${formula || 'x'}$`);
+      }
+    }
+
+    // 插入块级数学公式
+    function insertBlockMath() {
+      const formula = prompt("请输入数学公式（不包含$$符号）:", "\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}");
+      if (formula !== null) {
+        const finalFormula = formula || '\\sum_{i=1}^{n} x_i';
+        insertText(`$$${finalFormula}$$`);
+      }
+    }
+
+    // 切换预览模式
+    function togglePreview() {
+      const previewContainer = document.getElementById('previewContainer');
+      const previewBtn = document.getElementById('previewBtn');
+      const content = document.getElementById('contentEditor').value;
+      
+      if (!isPreviewMode) {
+        // 显示预览
+        document.getElementById('previewContent').innerHTML = markdownToHtml(content);
+        previewContainer.style.display = 'block';
+        previewBtn.textContent = '编辑';
+        previewBtn.classList.add('active');
+        isPreviewMode = true;
+        
+        // 渲染数学公式
+        renderMathFormulas();
+      } else {
+        // 隐藏预览
+        previewContainer.style.display = 'none';
+        previewBtn.textContent = '预览';
+        previewBtn.classList.remove('active');
+        isPreviewMode = false;
+      }
+    }
+
+    // 渲染数学公式
+    function renderMathFormulas() {
+      // 确保 KaTeX 已加载
+      if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.querySelector('#previewContent'), {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false,
+          errorColor: '#cc0000',
+          strict: false,
+          trust: false,
+          macros: {
+            "\\R": "\\mathbb{R}",
+            "\\C": "\\mathbb{C}",
+            "\\N": "\\mathbb{N}",
+            "\\Z": "\\mathbb{Z}",
+            "\\Q": "\\mathbb{Q}"
+          }
+        });
+        console.log('✅ KaTeX 数学公式渲染完成');
+      } else {
+        console.log('⏳ KaTeX 尚未加载，稍后重试...');
+        setTimeout(renderMathFormulas, 100);
+      }
+    }
+
+    // 简单的Markdown转HTML（支持KaTeX数学公式）
+    function markdownToHtml(text) {
+      console.log('🔄 开始Markdown转换，原始文本长度:', text.length);
+      console.log('📝 原始文本预览:', text.substring(0, 200) + '...');
+      
+      if (!text || text.trim() === '') {
+        return '<p>请输入内容...</p>';
+      }
+      
+      // 保护数学公式，避免被其他规则误处理
+      const mathBlocks = [];
+      const mathInlines = [];
+      
+      // 先提取并保护块级数学公式 $$...$$
+      text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, content) => {
+        const placeholder = `__MATH_BLOCK_${mathBlocks.length}__`;
+        mathBlocks.push(content.trim());
+        return placeholder;
+      });
+      
+      // 提取并保护行内数学公式 $...$
+      text = text.replace(/\$([^$\n]+?)\$/g, (match, content) => {
+        const placeholder = `__MATH_INLINE_${mathInlines.length}__`;
+        mathInlines.push(content.trim());
+        return placeholder;
+      });
+      
+      let processed = text
+        // 处理标题（必须在行首）
+        .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // 处理粗体和斜体
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        // 处理图片 - 先处理图片，避免与链接冲突
+        .replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, src) => {
+          console.log('🖼️ 发现图片:', { alt, src });
+          return `<img src="${src}" alt="${alt}" style="max-width: 100%; height: auto; display: block; margin: 1rem auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" />`;
+        })
+        // 处理链接
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>')
+        // 处理代码块
+        .replace(/```([\s\S]*?)```/g, '<pre style="background: #2a2a2a; color: #e0e0e0; padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0;"><code>$1</code></pre>')
+        // 处理行内代码
+        .replace(/`(.*?)`/g, '<code style="background: #f1f1f1; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;">$1</code>')
+        // 处理无序列表
+        .replace(/^- (.*$)/gim, '<li>$1</li>')
+        // 处理有序列表
+        .replace(/^(\d+)\. (.*$)/gim, '<li>$2</li>')
+        // 处理引用
+        .replace(/^> (.*$)/gim, '<blockquote style="border-left: 4px solid var(--primary-color); padding-left: 1rem; margin: 1rem 0; color: #666;">$1</blockquote>')
+        // 处理分割线
+        .replace(/^---$/gim, '<hr style="border: none; border-top: 2px solid #eee; margin: 2rem 0;">');
+      
+      // 包装连续的列表项
+      processed = processed.replace(/(<li>.*?<\/li>\s*)+/gs, function(match) {
+        console.log('📋 发现列表项:', match);
+        return '<ul style="margin: 1rem 0; padding-left: 2rem;">' + match + '</ul>';
+      });
+      
+      // 处理段落 - 按双换行分段
+      const paragraphs = processed.split(/\n\s*\n/);
+      processed = paragraphs.map(para => {
+        para = para.trim();
+        if (!para) return '';
+        
+        // 如果已经是HTML元素（包含<>），不要包装p标签
+        if (para.includes('<h') || para.includes('<ul') || para.includes('<ol') || 
+            para.includes('<blockquote') || para.includes('<hr') || 
+            para.includes('<pre') || para.includes('<img') ||
+            para.includes('__MATH_')) {
+          return para;
+        }
+        
+        // 处理单个换行为br标签
+        para = para.replace(/\n/g, '<br>');
+        
+        // 包装为段落
+        return `<p style="margin: 1rem 0; line-height: 1.6;">${para}</p>`;
+      }).join('\n');
+      
+      // 恢复数学公式
+      // 恢复块级数学公式
+      processed = processed.replace(/__MATH_BLOCK_(\d+)__/g, (match, index) => {
+        return `$$${mathBlocks[index]}$$`;
+      });
+      
+      // 恢复行内数学公式
+      processed = processed.replace(/__MATH_INLINE_(\d+)__/g, (match, index) => {
+        return `$${mathInlines[index]}$`;
+      });
+      
+      console.log('✅ Markdown转换完成，结果长度:', processed.length);
+      console.log('🔍 转换结果预览:', processed.substring(0, 300) + '...');
+      
+      return processed;
+    }
+
+    // 保存草稿
+    function saveDraft() {
+      const postData = getFormData();
+      if (!postData.title.trim()) {
+        alert('请填写文章标题');
+        return;
+      }
+      
+      // 保存到localStorage
+      localStorage.setItem('blogDraft', JSON.stringify(postData));
+      alert('草稿已保存');
+    }
+
+    // 获取表单数据
+    function getFormData() {
+      const activeCoverType = document.querySelector('.cover-option.active').dataset.type;
+      let cover = { type: activeCoverType, value: '' };
+      
+      if (activeCoverType === 'emoji') {
+        cover.value = document.getElementById('emojiInput').value || '📝';
+      } else {
+        // 允许 http(s)、/ 开头、相对路径
+        let url = document.getElementById('imageInput').value.trim();
+        if (!url) {
+          alert('请填写图片链接或上传图片');
+        }
+        cover.value = url;
+      }
+      
+      return {
+        title: document.getElementById('titleInput').value.trim(),
+        category: document.getElementById('categoryInput').value,
+        excerpt: document.getElementById('excerptInput').value.trim(),
+        content: document.getElementById('contentEditor').value.trim(),
+        cover: cover,
+        date: new Date().toLocaleDateString('zh-CN')
+      };
+    }
+
+    // 处理表单提交
+    async function handleSubmit(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn.textContent;
+      
+      try {
+        submitBtn.textContent = isEditMode ? '更新中...' : '发布中...';
+        submitBtn.disabled = true;
+        
+        const postData = getFormData();
+        
+        // 验证必填字段
+        if (!postData.title || !postData.category || !postData.content) {
+          alert('请填写所有必填字段');
+          return;
+        }
+        
+        // 如果没有摘要，自动生成
+        if (!postData.excerpt) {
+          postData.excerpt = postData.content.substring(0, 100) + '...';
+        }
+        
+        if (isEditMode) {
+          // 更新文章
+          await blogManager.updatePost(editingPostId, postData);
+          alert('文章更新成功！');
+        } else {
+          // 创建新文章
+          await blogManager.addPost(postData);
+          alert('文章发布成功！');
+        }
+        
+        // 清除草稿
+        localStorage.removeItem('blogDraft');
+        
+        // 跳转到博客首页
+        location.href = 'index.html';
+        
+      } catch (error) {
+        console.error('操作失败:', error);
+        alert(isEditMode ? '文章更新失败，请重试' : '文章发布失败，请重试');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    // 处理登录
+    async function handleLogin() {
+      try {
+        if (!window.authManager) {
+          alert('认证系统未加载，请刷新页面重试');
+          return;
+        }
+        
+        const success = await window.authManager.showLoginDialog();
+        if (success) {
+          updateUIBasedOnAuth();
+          alert('登录成功！');
+        }
+      } catch (error) {
+        console.error('登录失败:', error);
+        alert('登录失败，请重试');
+      }
+    }
+
+    // 处理退出
+    function handleLogout() {
+      if (confirm('确定要退出登录吗？')) {
+        if (window.authManager) {
+          window.authManager.logout();
+          alert('已退出登录');
+          location.href = 'index.html';
+        }
+      }
+    }
+
+    // 页面离开前检查草稿
+    window.addEventListener('beforeunload', function(e) {
+      const title = document.getElementById('titleInput').value.trim();
+      const content = document.getElementById('contentEditor').value.trim();
+      
+      if (title || content) {
+        const confirmationMessage = '您有未保存的内容，确定要离开吗？';
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+      }
+    });
+  </script>
+</body>
+</html>

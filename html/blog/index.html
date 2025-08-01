@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>博客 - Weitao Jiang</title>
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <script src="https://www.unpkg.com/mouse-firework@latest/dist/index.umd.js">
+
+</script>
+<script>
+    firework({
+  excludeElements: ["a"],
+  particles: [
+    {
+      shape: "circle",
+      move: "emit",
+      easing: "easeOutExpo",
+      colors: [
+        "rgba(255,182,185,.9)",
+        "rgba(250,227,217,.9)",
+        "rgba(187,222,214,.9)",
+        "rgba(138,198,209,.9)",
+      ],
+      number: 30,
+      duration: [1000,4000],
+      shapeOptions: {
+        radius: [5, 12],
+      },
+    },
+  ]
+});
+</script>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <a href="../index.html" class="blog-logo">Weitao Jiang</a>
+      <button class="blog-menu-toggle" aria-label="菜单">&#9776;</button>
+      <ul class="blog-nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="#" class="active" onclick="location.reload()">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="admin.html" id="adminLink" style="display: none;">管理</a></li>
+
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <a href="#" id="loginBtn" onclick="handleLogin()" class="blog-btn blog-btn-primary">登录</a>
+        <div id="userInfo" class="user-info" style="display: none;">
+          <span class="username" id="usernameSpan">👋 用户</span>
+          <button class="logout-btn" onclick="handleLogout()">退出</button>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+
+  <div class="blog-container">
+    <section class="blog-hero">
+      <h1>CBDT的博客</h1>
+      <p>如果我在走下坡路，那就证明我爬过山🏔</p>
+    </section>
+    <div class="blog-grid" id="blogGrid">
+      <!-- 博客文章将在这里动态加载 -->
+    </div>
+  </div>
+
+  <button class="create-post-btn" id="createPostBtn" onclick="handleCreatePost()" title="写新文章" style="display: none;">
+    ✏️
+  </button>
+
+  <script src="jwt-auth.js"></script>
+  <script src="blog-manager.js"></script>
+  <script>
+    // 汉堡菜单展开/收起+自适应
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggle = document.querySelector('.blog-menu-toggle');
+      var navLinks = document.querySelector('.blog-nav-links');
+      function handleResize() {
+        if (window.innerWidth > 768 && navLinks) {
+          navLinks.classList.remove('open');
+        }
+      }
+      if (toggle && navLinks) {
+        toggle.addEventListener('click', function() {
+          navLinks.classList.toggle('open');
+        });
+        window.addEventListener('resize', handleResize);
+        handleResize(); // 初始执行一次
+      }
+    });
+  </script>
+  <script>
+    // 渲染博客文章
+    async function renderBlogPosts() {
+      const blogGrid = document.getElementById('blogGrid');
+      blogGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: white;">正在加载文章...</div>';
+
+      try {
+        // 从BlogManager获取文章数据
+        const blogPosts = await blogManager.getAllPosts();
+
+        blogGrid.innerHTML = '';
+
+        if (blogPosts.length === 0) {
+          blogGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: white;">暂无文章，<a href="write-post.html" style="color: #FFD700;">点击这里</a> 开始创作第一篇文章！</div>';
+          return;
+        }
+
+        // 按日期和ID排序，最新的在前面
+        blogPosts.sort((a, b) => {
+          // 首先按日期排序（如果有日期的话）
+          if (a.date && b.date) {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            if (dateA.getTime() !== dateB.getTime()) {
+              return dateB.getTime() - dateA.getTime(); // 降序，最新的在前
+            }
+          }
+          // 如果日期相同或没有日期，按ID排序（ID越大越新）
+          return (b.id || 0) - (a.id || 0);
+        });
+
+        blogPosts.forEach(post => {
+          const blogCard = document.createElement('div');
+          blogCard.className = 'blog-card';
+          blogCard.onclick = () => viewPost(post.id);
+
+          // 兼容新旧封面字段，优先 cover.value
+          let imageHTML = '';
+          let img = '';
+          if (post.cover && post.cover.value) {
+            img = String(post.cover.value).trim();
+          } else if (post.image) {
+            img = String(post.image).trim();
+          }
+          // emoji 正则（支持单个或多个 emoji）
+          const emojiRegex = /^[\p{Emoji}\u200d\s]+$/u;
+          if (img && emojiRegex.test(img)) {
+            imageHTML = `<div class="blog-image-default" style="font-size:3.5rem;">${img}</div>`;
+          } else if (img && (/^(\/|https?:\/\/).+/i.test(img) || /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(img))) {
+            imageHTML = `<img src="${img}" alt="封面" class="blog-image-img" loading="lazy" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'blog-image-default\'>📝</div>');" />`;
+          } else {
+            imageHTML = '<div class="blog-image-default">📝</div>';
+          }
+
+          blogCard.innerHTML = `
+            <div class="blog-image">${imageHTML}</div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-category">${post.category}</span>
+                <span class="blog-date">${post.date}</span>
+                ${post.views ? `<span class="blog-views">👁️ ${post.views}</span>` : ''}
+              </div>
+              <h3 class="blog-title">${post.title}</h3>
+              <p class="blog-excerpt">${post.excerpt}</p>
+              <a href="#" class="read-more" onclick="event.stopPropagation(); viewPost(${post.id})">阅读更多 →</a>
+            </div>
+          `;
+
+          blogGrid.appendChild(blogCard);
+        });
+      } catch (error) {
+        console.error('加载文章失败:', error);
+        blogGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: white;">❌ 加载文章失败，请刷新页面重试</div>';
+      }
+    }
+
+    // 查看文章详情
+    function viewPost(id) {
+      // 使用URL参数传递文章ID
+      location.href = `post.html?id=${id}`;
+    }
+
+    // 页面加载时渲染文章
+    // 页面初始化
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // 确保认证管理器初始化
+        if (window.authManager) {
+          await window.authManager.waitForInit();
+        }
+        
+        // 确保BlogManager初始化，强制重新加载数据
+        blogManager.isLoaded = false;
+        await blogManager.loadData();
+        
+        // 渲染文章
+        await renderBlogPosts();
+        
+        // 更新UI权限状态
+        updateUIBasedOnAuth();
+      } catch (error) {
+        console.error('页面初始化失败:', error);
+        const blogGrid = document.getElementById('blogGrid');
+        blogGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: white;">❌ 页面加载失败，请刷新重试</div>';
+      }
+        });
+    // 更新UI基于认证状态
+    function updateUIBasedOnAuth() {
+      const adminLink = document.getElementById('adminLink');
+      const createPostBtn = document.getElementById('createPostBtn');
+      const loginBtn = document.getElementById('loginBtn');
+      const userInfo = document.getElementById('userInfo');
+      const usernameSpan = document.getElementById('usernameSpan');
+      
+      if (window.authManager && window.authManager.isLoggedIn()) {
+        // 用户已登录
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (userInfo) userInfo.style.display = 'flex';
+        if (createPostBtn) createPostBtn.style.display = 'block';
+        
+        const user = window.authManager.getCurrentUser();
+        if (user && usernameSpan) {
+          usernameSpan.textContent = `👋 ${user.username}`;
+        }
+        
+        // 检查是否是管理员
+        if (window.authManager.isAdmin()) {
+          if (adminLink) adminLink.style.display = 'block';
+        } else {
+          if (adminLink) adminLink.style.display = 'none';
+        }
+      } else {
+        // 用户未登录
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (userInfo) userInfo.style.display = 'none';
+        if (createPostBtn) createPostBtn.style.display = 'none';
+        if (adminLink) adminLink.style.display = 'none';
+      }
+    }
+
+    // 处理创建文章
+    function handleCreatePost() {
+      if (window.authManager && window.authManager.isLoggedIn()) {
+        location.href = 'write-post.html';
+      } else {
+        alert('请先登录后再写文章');
+        handleLogin();
+      }
+    }
+
+    // 处理登录
+    async function handleLogin() {
+      try {
+        if (!window.authManager) {
+          alert('认证系统未加载，请刷新页面重试');
+          return;
+        }
+        
+        const success = await window.authManager.showLoginDialog();
+        if (success) {
+          updateUIBasedOnAuth();
+          alert('登录成功！');
+        }
+      } catch (error) {
+        console.error('登录失败:', error);
+        alert('登录失败，请重试');
+      }
+    }
+
+    // 处理退出
+    function handleLogout() {
+      if (confirm('确定要退出登录吗？')) {
+        if (window.authManager) {
+          window.authManager.logout();
+          updateUIBasedOnAuth();
+          alert('已退出登录');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

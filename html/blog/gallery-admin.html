@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图库管理 - Weitao Jiang</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .user-info {
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .username {
+      font-weight: 500;
+    }
+
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      text-align: center;
+      color: white;
+      margin-bottom: 2rem;
+    }
+
+    .page-title h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+    }
+
+    .stats-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-card .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .stat-card .stat-label {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .gallery-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .gallery-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .gallery-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #c82333;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .search-bar {
+      position: relative;
+      max-width: 300px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 2.5rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .image-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1rem;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .image-card:hover {
+      border-color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-card.selected {
+      border-color: #667eea;
+      background: #f8f9ff;
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .image-info {
+      margin-bottom: 1rem;
+    }
+
+    .image-filename {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+      word-break: break-all;
+      font-size: 0.9rem;
+    }
+
+    .image-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .image-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .image-actions .btn {
+      flex: 1;
+      justify-content: center;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .modal-content p {
+      margin-bottom: 2rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .gallery-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .gallery-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="../index.html" class="logo">Weitao Jiang</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="index.html">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="admin.html">管理</a></li>
+        <li><a href="comment-admin.html">评论管理</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <div class="user-info">
+          <span class="username" id="usernameSpan">🖼️ 图库管理</span>
+          <button class="logout-btn" onclick="window.location.href='admin.html'">返回管理</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div id="authCheckLoading" style="
+      text-align: center;
+      color: white;
+      margin: 3rem 0;
+      font-size: 1.2rem;
+      display: block;
+    ">
+      🔐 验证权限中...
+    </div>
+
+    <div id="mainContent" style="display: none;">
+      <a href="admin.html" class="back-btn">
+        ← 返回管理中心
+      </a>
+
+      <div class="page-title">
+        <h1>🖼️ 图库管理</h1>
+        <p>管理博客中的所有图片资源</p>
+      </div>
+
+      <div class="stats-container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="totalImages">0</span>
+            <span class="stat-label">📸 图片总数</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="totalSize">0 MB</span>
+            <span class="stat-label">💾 总大小</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="selectedCount">0</span>
+            <span class="stat-label">✅ 已选择</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-container">
+        <div class="gallery-header">
+          <h2 class="gallery-title">图片列表</h2>
+          <div class="gallery-actions">
+            <div class="search-bar">
+              <span class="search-icon">🔍</span>
+              <input type="text" class="search-input" id="searchInput" placeholder="搜索图片...">
+            </div>
+            <button class="btn btn-secondary" onclick="selectAll()">全选</button>
+            <button class="btn btn-secondary" onclick="deselectAll()">取消全选</button>
+            <button class="btn btn-danger" id="deleteSelectedBtn" onclick="deleteSelected()" disabled>
+              🗑️ 删除选中 (<span id="deleteCount">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <div id="galleryContent">
+          <div class="loading">
+            📷 正在加载图片列表...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 删除确认弹窗 -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <h3>⚠️ 确认删除</h3>
+      <p id="deleteMessage">确定要删除选中的图片吗？此操作不可撤销。</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeDeleteModal()">取消</button>
+        <button class="btn btn-danger" onclick="confirmDelete()">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图片预览弹窗 -->
+  <div class="modal" id="previewModal">
+    <div class="modal-content" style="max-width: 80%; max-height: 80%;">
+      <img id="previewImage" src="" alt="图片预览" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 8px;">
+      <div class="modal-actions" style="margin-top: 1rem;">
+        <button class="btn btn-secondary" onclick="closePreviewModal()">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="jwt-auth.js"></script>
+  <script>
+    // 图片数据
+    let images = [];
+    let filteredImages = [];
+    let selectedImages = new Set();
+
+    // 页面加载时验证权限并加载图片
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // 等待JWT认证管理器初始化
+        await window.authManager.waitForInit();
+        
+        // 检查是否已登录
+        if (!window.authManager.isLoggedIn()) {
+          const loginResult = await window.authManager.showLoginDialog();
+          if (!loginResult) {
+            alert('需要登录才能访问图库管理！');
+            window.location.href = 'admin.html';
+            return;
+          }
+        }
+        
+        // 权限验证通过，显示页面内容
+        document.getElementById('authCheckLoading').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        
+        // 加载图片列表
+        await loadImages();
+        
+      } catch (error) {
+        console.error('页面初始化失败:', error);
+        document.getElementById('authCheckLoading').innerHTML = '❌ 加载失败，请刷新页面';
+      }
+    });
+
+    // 加载图片列表
+    async function loadImages() {
+      try {
+        const token = localStorage.getItem('jwt_token') || localStorage.getItem('token');
+        if (!token) {
+          throw new Error('请先登录');
+        }
+
+        const response = await fetch('/api/gallery/list', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          images = data.images || [];
+          filteredImages = [...images];
+          updateStats();
+          renderGallery();
+        } else {
+          throw new Error(data.message || '加载图片列表失败');
+        }
+      } catch (error) {
+        console.error('加载图片失败:', error);
+        document.getElementById('galleryContent').innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">❌</div>
+            <h3>加载失败</h3>
+            <p>${error.message}</p>
+            <button class="btn btn-secondary" onclick="loadImages()">重试</button>
+          </div>
+        `;
+      }
+    }
+
+    // 更新统计信息
+    function updateStats() {
+      const totalImages = images.length;
+      const totalSizeBytes = images.reduce((sum, img) => sum + (img.size || 0), 0);
+      const totalSizeMB = (totalSizeBytes / (1024 * 1024)).toFixed(2);
+      const selectedCount = selectedImages.size;
+
+      document.getElementById('totalImages').textContent = totalImages;
+      document.getElementById('totalSize').textContent = totalSizeMB + ' MB';
+      document.getElementById('selectedCount').textContent = selectedCount;
+      document.getElementById('deleteCount').textContent = selectedCount;
+      
+      // 更新删除按钮状态
+      const deleteBtn = document.getElementById('deleteSelectedBtn');
+      deleteBtn.disabled = selectedCount === 0;
+    }
+
+    // 渲染图片库
+    function renderGallery() {
+      const container = document.getElementById('galleryContent');
+      
+      if (filteredImages.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📷</div>
+            <h3>暂无图片</h3>
+            <p>还没有上传任何图片，去<a href="write-post.html" style="color: #667eea;">写文章</a>上传一些图片吧！</p>
+          </div>
+        `;
+        return;
+      }
+
+      const galleryHTML = `
+        <div class="gallery-grid">
+          ${filteredImages.map(image => `
+            <div class="image-card ${selectedImages.has(image.filename) ? 'selected' : ''}" data-filename="${image.filename}">
+              <div class="checkbox-container">
+                <input type="checkbox" ${selectedImages.has(image.filename) ? 'checked' : ''} 
+                       onchange="toggleSelection('${image.filename}')">
+                <label>选择此图片</label>
+              </div>
+              <img src="${image.url}" alt="${image.filename}" class="image-preview" 
+                   onclick="previewImage('${image.url}', '${image.filename}')">
+              <div class="image-info">
+                <div class="image-filename">${image.filename}</div>
+                <div class="image-details">
+                  <span>📏 ${image.width || '?'} × ${image.height || '?'}</span>
+                  <span>💾 ${formatFileSize(image.size || 0)}</span>
+                  <span>📅 ${formatDate(image.uploadTime)}</span>
+                  <span>🔗 ${image.type || 'image'}</span>
+                </div>
+              </div>
+              <div class="image-actions">
+                <button class="btn btn-secondary" onclick="copyImageUrl('${image.url}')">
+                  📋 复制链接
+                </button>
+                <button class="btn btn-danger" onclick="deleteSingleImage('${image.filename}')">
+                  🗑️ 删除
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      
+      container.innerHTML = galleryHTML;
+    }
+
+    // 格式化文件大小
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // 格式化日期
+    function formatDate(dateString) {
+      if (!dateString) return '未知';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('zh-CN');
+    }
+
+    // 切换图片选择状态
+    function toggleSelection(filename) {
+      if (selectedImages.has(filename)) {
+        selectedImages.delete(filename);
+      } else {
+        selectedImages.add(filename);
+      }
+      updateStats();
+      
+      // 更新卡片样式
+      const card = document.querySelector(`[data-filename="${filename}"]`);
+      if (card) {
+        card.classList.toggle('selected', selectedImages.has(filename));
+      }
+    }
+
+    // 全选
+    function selectAll() {
+      selectedImages.clear();
+      filteredImages.forEach(image => selectedImages.add(image.filename));
+      updateStats();
+      renderGallery();
+    }
+
+    // 取消全选
+    function deselectAll() {
+      selectedImages.clear();
+      updateStats();
+      renderGallery();
+    }
+
+    // 搜索功能
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      filteredImages = images.filter(image => 
+        image.filename.toLowerCase().includes(searchTerm)
+      );
+      renderGallery();
+    });
+
+    // 预览图片
+    function previewImage(url, filename) {
+      document.getElementById('previewImage').src = url;
+      document.getElementById('previewModal').classList.add('active');
+    }
+
+    // 关闭预览
+    function closePreviewModal() {
+      document.getElementById('previewModal').classList.remove('active');
+    }
+
+    // 复制图片链接
+    function copyImageUrl(url) {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('图片链接已复制到剪贴板！');
+      }).catch(() => {
+        // 降级方案
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('图片链接已复制到剪贴板！');
+      });
+    }
+
+    // 删除单个图片
+    function deleteSingleImage(filename) {
+      selectedImages.clear();
+      selectedImages.add(filename);
+      updateStats();
+      showDeleteModal([filename]);
+    }
+
+    // 删除选中的图片
+    function deleteSelected() {
+      if (selectedImages.size === 0) {
+        alert('请先选择要删除的图片！');
+        return;
+      }
+      showDeleteModal(Array.from(selectedImages));
+    }
+
+    // 显示删除确认弹窗
+    function showDeleteModal(filenames) {
+      const count = filenames.length;
+      const message = count === 1 
+        ? `确定要删除图片 "${filenames[0]}" 吗？`
+        : `确定要删除选中的 ${count} 张图片吗？`;
+      
+      document.getElementById('deleteMessage').textContent = message + '\n\n⚠️ 此操作不可撤销，如果这些图片正在文章中使用，删除后将无法显示。';
+      document.getElementById('deleteModal').classList.add('active');
+    }
+
+    // 关闭删除弹窗
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+    }
+
+    // 确认删除
+    async function confirmDelete() {
+      try {
+        const token = localStorage.getItem('jwt_token') || localStorage.getItem('token');
+        if (!token) {
+          throw new Error('请先登录');
+        }
+
+        const filenames = Array.from(selectedImages);
+        
+        const response = await fetch('/api/gallery/delete', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ filenames })
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          // 从本地数据中移除已删除的图片
+          images = images.filter(img => !filenames.includes(img.filename));
+          filteredImages = filteredImages.filter(img => !filenames.includes(img.filename));
+          selectedImages.clear();
+          
+          updateStats();
+          renderGallery();
+          closeDeleteModal();
+          
+          alert(`成功删除 ${filenames.length} 张图片！`);
+        } else {
+          throw new Error(data.message || '删除失败');
+        }
+      } catch (error) {
+        console.error('删除失败:', error);
+        alert('删除失败：' + error.message);
+      }
+    }
+
+    // 点击弹窗外部关闭
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeDeleteModal();
+      }
+    });
+
+    document.getElementById('previewModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePreviewModal();
+      }
+    });
+  </script>
+</body>
+</html>

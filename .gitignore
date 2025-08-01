@@ -1,0 +1,125 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Backup files
+*.backup
+*.bak
+*~
+
+# User data (comment out if you want to include sample data)
+data/posts.json
+data/users.json
+
+# Uploads directory (contains user uploaded files)
+uploads/*
+!uploads/.gitkeep
+
+# Build outputs
+dist/
+build/
+
+# Runtime files
+*.pid
+*.seed
+*.pid.lock
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Deployment and configuration files (personal/sensitive)
+*deploy*.sh
+*config*.env
+deploy-config*
+DEPLOY-GUIDE.md
+install-node.sh
+start-server.sh
+remote-deploy.sh
+safe-deploy.sh
+quick-deploy.sh
+simple-deploy.sh
+blog-deploy.sh
+
+# Personal files
+html/tencent*.txt
+html/cv.pdf
+
+# Test and debug files
+*test.png
+*debug*

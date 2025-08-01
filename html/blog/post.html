@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>博客文章 - Weitao Jiang</title>
+  <link rel="stylesheet" href="blog.css">
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+  <!-- KaTeX JavaScript -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      min-height: 100vh;
+      color: #fff;
+      margin: 0;
+      font-family: 'SimSun', '宋体', serif;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      background: rgba(44,44,44,0.97);
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+      font-family: 'SimSun', '宋体', serif;
+    }
+    .back-btn {
+      display: inline-block;
+      color: #bfa940;
+      text-decoration: none;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .back-btn:hover {
+      color: #b37a00;
+    }
+    .article {
+      background: #232323;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      padding: 2rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .article-header {
+      margin-bottom: 1.2rem;
+    }
+    .article-title {
+      font-size: 2.1rem;
+      color: #bfa940;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .article-meta {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .article-category {
+      background: #333;
+      color: #bfa940;
+      border-radius: 8px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.98rem;
+      margin-right: 0.7rem;
+    }
+    .article-content {
+      color: #f3f3f3;
+      font-size: 1.22rem;
+      line-height: 1.8;
+      word-break: break-word;
+      font-family: 'SimSun', '宋体', serif;
+    }
+    .article-content p {
+      text-indent: 2em;
+      margin: 1em 0;
+      font-family: 'SimSun', '宋体', serif;
+    }
+    .article-content img {
+      display: block;
+      margin: 1.2rem auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      width: 70%;
+      max-width: 100%;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .article-content {
+      /* ...existing styles... */
+      text-align: justify;
+    }
+    .article-content p img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .article-content h1, .article-content h2, .article-content h3, .article-content h4, .article-content h5, .article-content h6, .article-content ul, .article-content ol, .article-content blockquote, .article-content pre, .article-content code {
+      font-family: 'SimSun', '宋体', serif;
+    }
+    .article-content a,
+    .article-content a:visited {
+      color: #bfa940;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .article-content a:hover {
+      color: #FFD700;
+    }
+    /* KaTeX 样式优化 */
+    .katex {
+      color: #f3f3f3 !important;
+      font-size: 1.1em;
+    }
+    .katex-display {
+      margin: 1.5em 0;
+      text-align: center;
+    }
+    .katex .base {
+      color: #f3f3f3 !important;
+    }
+    .katex .mord {
+      color: #f3f3f3 !important;
+    }
+    .katex .mop {
+      color: #bfa940 !important;
+    }
+    .katex .mbin {
+      color: #FFD700 !important;
+    }
+    .katex .mrel {
+      color: #FFD700 !important;
+    }
+    .katex .mpunct {
+      color: #f3f3f3 !important;
+    }
+    .article-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 1.2rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      display: block;
+    }
+    .article-content pre {
+      background: #181818;
+      color: #bfa940;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.2rem 0;
+      font-size: 1rem;
+    }
+    .article-content code {
+      background: #2c2c2c;
+      color: #bfa940;
+      border-radius: 4px;
+      padding: 0.2em 0.5em;
+      font-size: 1em;
+    }
+    .article-content blockquote {
+      border-left: 4px solid #bfa940;
+      background: #292929;
+      color: #bfa940;
+      margin: 1.2rem 0;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      font-style: italic;
+    }
+    .article-content ul, .article-content ol {
+      margin: 1.2rem 0 1.2rem 2rem;
+      padding-left: 1.2rem;
+    }
+    .comments {
+      background: #232323;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      padding: 2rem 1.5rem;
+    }
+    .comments-title {
+      color: #bfa940;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      font-weight: bold;
+    }
+    .comment-form {
+      margin-bottom: 2rem;
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .comment-input {
+      background: #181818;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .comment-input:focus {
+      border: 1.5px solid #bfa940;
+    }
+    .submit-btn {
+      background: #bfa940;
+      color: #232323;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 2.2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover {
+      background: #b37a00;
+      color: #fff;
+    }
+    .empty-comments {
+      text-align: center;
+      color: #aaa;
+      padding: 2rem 0;
+    }
+    .empty-comments .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .comment-item {
+      background: #181818;
+      border-radius: 8px;
+      margin-bottom: 1.2rem;
+      padding: 1.2rem 1rem 0.7rem 1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .comment-author {
+      color: #bfa940;
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+    .comment-date {
+      color: #aaa;
+      font-size: 0.98rem;
+    }
+    .comment-content {
+      color: #f3f3f3;
+      margin-bottom: 0.7rem;
+      line-height: 1.7;
+    }
+    .comment-actions {
+      margin-bottom: 0.5rem;
+    }
+    .comment-action-btn {
+      background: #292929;
+      color: #bfa940;
+      border: 1px solid #bfa940;
+      border-radius: 6px;
+      padding: 0.2rem 1.1rem;
+      font-size: 0.98rem;
+      margin-right: 0.7rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .comment-action-btn:hover {
+      background: #bfa940;
+      color: #232323;
+    }
+    .comment-action-btn.danger {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+    }
+    .comment-action-btn.danger:hover {
+      background: #a71d2a;
+      color: #fff;
+    }
+    .reply-form {
+      display: none;
+      margin-top: 1rem;
+      background: #232323;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .reply-form.show {
+      display: block;
+    }
+    .reply-input {
+      width: 100%;
+      background: #181818;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin-bottom: 0.7rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .reply-input:focus {
+      border: 1.5px solid #bfa940;
+    }
+    .reply-btn, .cancel-btn {
+      background: #bfa940;
+      color: #232323;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 0.7rem;
+      transition: background 0.2s;
+    }
+    .reply-btn:hover, .cancel-btn:hover {
+      background: #b37a00;
+      color: #fff;
+    }
+    .replies {
+      margin-left: 1.2rem;
+      margin-top: 0.7rem;
+      border-left: 2px solid #bfa940;
+      padding-left: 1rem;
+    }
+    .reply-item {
+      background: #232323;
+      border-radius: 6px;
+      margin-bottom: 0.7rem;
+      padding: 0.7rem 1rem;
+      color: #f3f3f3;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .message-toast {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: #bfa940;
+      color: #232323;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 10000;
+      font-weight: 600;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <script src="https://www.unpkg.com/mouse-firework@latest/dist/index.umd.js">
+
+</script>
+<script>
+    firework({
+  excludeElements: ["a"],
+  particles: [
+    {
+      shape: "circle",
+      move: "emit",
+      easing: "easeOutExpo",
+      colors: [
+        "rgba(255,182,185,.9)",
+        "rgba(250,227,217,.9)",
+        "rgba(187,222,214,.9)",
+        "rgba(138,198,209,.9)",
+      ],
+      number: 30,
+      duration: [1000,4000],
+      shapeOptions: {
+        radius: [5, 12],
+      },
+    },
+  ]
+});
+</script>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <a href="../index.html" class="blog-logo">Weitao Jiang</a>
+      <ul class="blog-nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="index.html">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="admin.html" id="adminLink" style="display: none;">管理</a></li>
+        <li><a href="comment-admin.html" id="commentAdminLink" style="display: none;">评论管理</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <a href="index.html" class="blog-btn blog-btn-primary" style="color:#fff;">返回博客</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">
+      ← 返回博客首页
+    </a>
+
+    <article class="article" id="articleContent">
+      <!-- 文章内容将在这里动态加载 -->
+    </article>
+
+    <section class="comments">
+      <h3 class="comments-title">💬 留言评论</h3>
+      <form class="comment-form" onsubmit="submitComment(event)">
+        <div class="form-row">
+          <input type="text" id="commentAuthor" class="comment-input" placeholder="您的姓名" required style="height: 50px; width: 48%;">
+          <input type="email" id="commentEmail" class="comment-input" placeholder="邮箱（可选）" style="height: 50px; width: 48%;">
+        </div>
+        <textarea id="commentContent" class="comment-input" placeholder="写下您的想法..." rows="4" required></textarea>
+        <button type="submit" class="submit-btn">发表评论</button>
+      </form>
+      <div id="commentsList">
+        <!-- 评论列表将在这里动态加载 -->
+      </div>
+    </section>
+  </div>
+
+  <script src="jwt-auth.js"></script>
+  <script src="blog-manager.js"></script>
+  <script>
+    // 简单的UI更新函数，解决兼容性问题
+    function updateUIBasedOnAuth() {
+      // post.html 不需要复杂的UI更新逻辑，主要用于查看文章
+      console.log('updateUIBasedOnAuth called - 在post.html中无需执行复杂逻辑');
+    }
+    
+    // 从 URL 参数或 localStorage 获取文章数据
+    async function loadArticle() {
+      let post = null;
+      
+      // 首先尝试从URL参数获取文章ID
+      const urlParams = new URLSearchParams(window.location.search);
+      const postId = urlParams.get('id');
+      console.log('URL参数中的文章ID:', postId);
+      
+      if (postId) {
+        // 从BlogManager获取文章
+        console.log('开始从BlogManager获取文章, ID:', postId);
+        try {
+          // 强制重新加载数据以确保获取最新信息
+          blogManager.isLoaded = false;
+          post = await blogManager.getPostById(parseInt(postId));
+          console.log('获取到的文章:', post);
+          if (post) {
+            // 浏览量已在getPostById中自动增加
+            console.log(`文章《${post.title}》浏览量: ${post.views}`);
+          } else {
+            console.log('未找到指定ID的文章');
+          }
+        } catch (error) {
+          console.error('获取文章时出错:', error);
+          throw error;
+        }
+      } else {
+        // 回退到从localStorage获取
+        console.log('没有URL参数，尝试从localStorage获取');
+        const postData = localStorage.getItem('currentPost');
+        if (postData) {
+          post = JSON.parse(postData);
+          console.log('从localStorage获取到文章:', post);
+        }
+      }
+      
+      if (!post) {
+        document.getElementById('articleContent').innerHTML = `
+          <div style="text-align: center; padding: 3rem;">
+            <h2>😅 未找到文章</h2>
+            <p>请从博客首页选择文章查看</p>
+            <a href="index.html" style="color: #FFD700;">返回博客首页</a>
+          </div>
+        `;
+        return;
+      }
+
+      // 生成更丰富的文章内容
+      const fullContent = generateFullContent(post);
+      
+      document.getElementById('articleContent').innerHTML = `
+        <header class="article-header">
+          <h1 class="article-title">${post.title}</h1>
+          <div class="article-meta">
+            <span class="article-category">${post.category}</span>
+            <span>📅 ${post.date}</span>
+            <span>👀 ${post.views || 0} 次阅读</span>
+          </div>
+        </header>
+        <div class="article-content">
+          ${fullContent}
+        </div>
+      `;
+      
+      // 更新页面标题
+      document.title = `${post.title} - Weitao Jiang`;
+      
+      // 渲染数学公式
+      renderMathFormulas();
+      
+      // 设置当前文章ID并加载评论
+      currentPostId = post.id;
+      await loadComments();
+    }
+
+    function generateFullContent(post) {
+      // 总是使用从API获取的实际文章内容
+      console.log('🎨 渲染文章内容:', post.title, '内容长度:', post.content?.length);
+      return renderMarkdown(post.content || '暂无内容');
+    }
+
+    // 简单的Markdown渲染函数（支持KaTeX数学公式）
+    function renderMarkdown(text) {
+      if (!text) return '';
+      
+      // 保护数学公式，避免被其他规则误处理
+      const mathBlocks = [];
+      const mathInlines = [];
+      
+      // 先提取并保护块级数学公式 $$...$$
+      text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, content) => {
+        const placeholder = `__MATH_BLOCK_${mathBlocks.length}__`;
+        mathBlocks.push(content.trim());
+        return placeholder;
+      });
+      
+      // 提取并保护行内数学公式 $...$
+      text = text.replace(/\$([^$\n]+?)\$/g, (match, content) => {
+        const placeholder = `__MATH_INLINE_${mathInlines.length}__`;
+        mathInlines.push(content.trim());
+        return placeholder;
+      });
+      
+      // 处理其他Markdown语法
+      text = text
+        // 标题
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        
+        // 粗体和斜体
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        
+        // 代码块
+        .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+        .replace(/`(.*?)`/g, '<code>$1</code>')
+        
+        // 图片 (必须在链接之前处理)
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+          console.log('🖼️ 处理图片:', alt, src);
+          return `<img src="${src}" alt="${alt}" style="max-width: 100%; height: auto; display: block; margin: 1rem auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onload="console.log('✅ 图片加载成功:', this.src)" onerror="console.error('❌ 图片加载失败:', this.src); this.style.border='2px solid red'; this.alt='图片加载失败: ' + this.alt;">`;
+        })
+        
+        // 链接
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+        
+        // 引用
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+        
+        // 列表
+        .replace(/^\* (.*$)/gim, '<li>$1</li>')
+        .replace(/^- (.*$)/gim, '<li>$1</li>')
+        .replace(/^(\d+)\. (.*$)/gim, '<li>$1. $2</li>')
+        
+        // 换行处理
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>')
+        
+        // 包装段落
+        .replace(/^(?!<[h|u|o|l|b|p|i])(.+)/gm, '<p>$1</p>')
+        
+        // 清理多余的段落标签
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<h[1-6]>)/g, '$1')
+        .replace(/(<\/h[1-6]>)<\/p>/g, '$1')
+        .replace(/<p>(<blockquote>)/g, '$1')
+        .replace(/(<\/blockquote>)<\/p>/g, '$1')
+        .replace(/<p>(<pre>)/g, '$1')
+        .replace(/(<\/pre>)<\/p>/g, '$1')
+        
+        // 处理列表
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/<\/ul>\s*<ul>/g, '');
+      
+      // 恢复数学公式
+      // 恢复块级数学公式
+      text = text.replace(/__MATH_BLOCK_(\d+)__/g, (match, index) => {
+        return `$$${mathBlocks[index]}$$`;
+      });
+      
+      // 恢复行内数学公式
+      text = text.replace(/__MATH_INLINE_(\d+)__/g, (match, index) => {
+        return `$${mathInlines[index]}$`;
+      });
+      
+      return text;
+    }
+
+    // 渲染数学公式
+    function renderMathFormulas() {
+      // 确保 KaTeX 已加载
+      if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.querySelector('.article-content'), {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false,
+          errorColor: '#cc0000',
+          strict: false,
+          trust: false,
+          macros: {
+            "\\R": "\\mathbb{R}",
+            "\\C": "\\mathbb{C}",
+            "\\N": "\\mathbb{N}",
+            "\\Z": "\\mathbb{Z}",
+            "\\Q": "\\mathbb{Q}"
+          }
+        });
+        console.log('✅ KaTeX 数学公式渲染完成');
+      } else {
+        console.log('⏳ KaTeX 尚未加载，稍后重试...');
+        setTimeout(renderMathFormulas, 100);
+      }
+    }
+
+    let currentPostId = null;
+
+    async function submitComment(event) {
+      event.preventDefault();
+      
+      const author = document.getElementById('commentAuthor').value;
+      const email = document.getElementById('commentEmail').value;
+      const content = document.getElementById('commentContent').value;
+      
+      if (!currentPostId) {
+        alert('无法获取文章信息，请刷新页面重试');
+        return;
+      }
+      
+      try {
+        const commentData = {
+          author: author.trim(),
+          email: email.trim(),
+          content: content.trim()
+        };
+        
+        const newComment = await blogManager.addComment(currentPostId, commentData);
+        
+        // 清空表单
+        document.getElementById('commentAuthor').value = '';
+        document.getElementById('commentEmail').value = '';
+        document.getElementById('commentContent').value = '';
+        
+        // 重新加载评论
+        await loadComments();
+        
+        // 显示成功消息
+        showMessage('评论发表成功！', 'success');
+        
+      } catch (error) {
+        console.error('发表评论失败:', error);
+        showMessage('发表评论失败，请重试', 'error');
+      }
+    }
+
+    async function loadComments() {
+      if (!currentPostId) return;
+      
+      const comments = await blogManager.getComments(currentPostId);
+      const commentsList = document.getElementById('commentsList');
+      
+      if (!Array.isArray(comments) || comments.length === 0) {
+        commentsList.innerHTML = `
+          <div class="empty-comments">
+            <div class="emoji">💬</div>
+            <p>暂无评论，来做第一个评论者吧！</p>
+          </div>
+        `;
+        return;
+      }
+      
+      commentsList.innerHTML = comments.map(comment => `
+        <div class="comment-item" data-comment-id="${comment.id}">
+          <div class="comment-header">
+            <div class="comment-author">
+              <span>👤 ${comment.author}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span class="comment-date">${comment.date}</span>
+              ${(window.authManager && authManager.isAdmin()) ? `<button class="comment-action-btn danger" onclick="deleteComment(${comment.id})">删除</button>` : ''}
+            </div>
+          </div>
+          <div class="comment-content">${comment.content}</div>
+          <div class="comment-actions">
+            <button class="comment-action-btn" onclick="showReplyForm(${comment.id})">💬 回复</button>
+          </div>
+          <div class="reply-form" id="replyForm${comment.id}">
+            <input type="text" class="reply-input" placeholder="您的姓名" id="replyAuthor${comment.id}" required>
+            <textarea class="reply-input" placeholder="写下您的回复..." id="replyContent${comment.id}" rows="3" required></textarea>
+            <button class="reply-btn" onclick="submitReply(${comment.id})">发表回复</button>
+            <button class="cancel-btn" onclick="hideReplyForm(${comment.id})">取消</button>
+          </div>
+          ${comment.replies.length > 0 ? `
+            <div class="replies">
+              ${comment.replies.map(reply => `
+                <div class="reply-item" data-reply-id="${reply.id}">
+                  <div class="comment-header">
+                    <div class="comment-author">
+                      <span>👤 ${reply.author}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                      <span class="comment-date">${reply.date}</span>
+                      ${(window.authManager && authManager.isAdmin()) ? `<button class="comment-action-btn danger" onclick="deleteReply(${comment.id}, ${reply.id})">删除</button>` : ''}
+                    </div>
+                  </div>
+                  <div class="comment-content">${reply.content}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function showReplyForm(commentId) {
+      // 隐藏所有回复表单
+      document.querySelectorAll('.reply-form').forEach(form => {
+        form.classList.remove('show');
+      });
+      
+      // 显示指定的回复表单
+      const replyForm = document.getElementById(`replyForm${commentId}`);
+      replyForm.classList.add('show');
+      
+      // 聚焦到姓名输入框
+      document.getElementById(`replyAuthor${commentId}`).focus();
+    }
+
+    function hideReplyForm(commentId) {
+      const replyForm = document.getElementById(`replyForm${commentId}`);
+      replyForm.classList.remove('show');
+      
+      // 清空表单
+      document.getElementById(`replyAuthor${commentId}`).value = '';
+      document.getElementById(`replyContent${commentId}`).value = '';
+    }
+
+    async function submitReply(commentId) {
+      const author = document.getElementById(`replyAuthor${commentId}`).value;
+      const content = document.getElementById(`replyContent${commentId}`).value;
+      
+      if (!author.trim() || !content.trim()) {
+        alert('请填写姓名和回复内容');
+        return;
+      }
+      
+      try {
+        const replyData = {
+          author: author.trim(),
+          content: content.trim()
+        };
+        
+        const newReply = await blogManager.addReply(currentPostId, commentId, replyData);
+        
+        if (newReply) {
+          hideReplyForm(commentId);
+          await loadComments();
+          showMessage('回复发表成功！', 'success');
+        } else {
+          showMessage('回复失败，请重试', 'error');
+        }
+        
+      } catch (error) {
+        console.error('发表回复失败:', error);
+        showMessage('发表回复失败，请重试', 'error');
+      }
+    }
+
+    async function deleteComment(commentId) {
+      if (!confirm('确定要删除这条评论吗？此操作无法撤销。')) {
+        return;
+      }
+      
+      try {
+        const success = await blogManager.deleteComment(currentPostId, commentId);
+        
+        if (success) {
+          await loadComments();
+          showMessage('评论删除成功！', 'success');
+        } else {
+          showMessage('删除失败，评论不存在', 'error');
+        }
+        
+      } catch (error) {
+        console.error('删除评论失败:', error);
+        showMessage('删除评论失败，请重试', 'error');
+      }
+    }
+
+    async function deleteReply(commentId, replyId) {
+      if (!confirm('确定要删除这条回复吗？此操作无法撤销。')) {
+        return;
+      }
+      
+      try {
+        const success = await blogManager.deleteReply(currentPostId, commentId, replyId);
+        
+        if (success) {
+          await loadComments();
+          showMessage('回复删除成功！', 'success');
+        } else {
+          showMessage('删除失败，回复不存在', 'error');
+        }
+        
+      } catch (error) {
+        console.error('删除回复失败:', error);
+        showMessage('删除回复失败，请重试', 'error');
+      }
+    }
+
+    function showMessage(message, type = 'info') {
+      // 移除已存在的消息
+      const existingMessage = document.querySelector('.message-toast');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+      
+      // 创建消息提示
+      const toast = document.createElement('div');
+      toast.className = 'message-toast';
+      toast.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#FFD700'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
+        animation: slideIn 0.3s ease-out;
+      `;
+      toast.textContent = message;
+      
+      document.body.appendChild(toast);
+      
+      // 3秒后自动消失
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.remove();
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // 页面加载时加载文章
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        console.log('开始初始化页面...');
+        
+        // 等待认证管理器初始化（jwt-auth.js已创建全局实例）
+        console.log('window.authManager存在:', !!window.authManager);
+        if (window.authManager) {
+          console.log('authManager类型:', typeof window.authManager);
+          console.log('authManager方法:', Object.getOwnPropertyNames(Object.getPrototypeOf(window.authManager)));
+          console.log('isAdmin方法存在:', typeof window.authManager.isAdmin);
+          await window.authManager.waitForInit();
+          console.log('认证管理器已初始化');
+        } else {
+          console.log('⚠️ authManager未定义，跳过认证初始化');
+        }
+        
+        console.log('blogManager存在:', typeof blogManager !== 'undefined');
+        console.log('blogManager.apiBaseUrl:', blogManager ? blogManager.apiBaseUrl : 'undefined');
+        
+        // 确保BlogManager初始化
+        console.log('开始加载数据...');
+        await blogManager.loadData();
+        console.log('数据加载完成');
+        
+        // 加载文章
+        console.log('开始加载文章...');
+        await loadArticle();
+        console.log('文章加载完成');
+        
+        // 更新UI权限状态
+        await updateUIBasedOnAuth();
+        
+        // 确保 KaTeX 渲染完成
+        setTimeout(renderMathFormulas, 200);
+      } catch (error) {
+        console.error('页面初始化失败:', error);
+        console.error('错误堆栈:', error.stack);
+        document.getElementById('articleContent').innerHTML = `
+          <div style="text-align: center; padding: 3rem;">
+            <h2>❌ 页面加载失败</h2>
+            <p>错误信息: ${error.message}</p>
+            <p>请刷新页面重试</p>
+            <a href="index.html" style="color: #FFD700;">返回博客首页</a>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

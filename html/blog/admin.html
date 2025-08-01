@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>管理控制台 - Weitao Jiang</title>
+  <link rel="stylesheet" href="blog.css">
+  <style>
+    /* 保留管理台自定义样式和动画 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .stat-card {
+      background: rgba(44,44,44,0.97);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    .stat-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      color: var(--white);
+      font-size: 1.1rem;
+    }
+    .admin-section {
+      background: rgba(44,44,44,0.97);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--white);
+    }
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--white);
+    }
+    /* 用户管理样式 */
+    .blog-btn-info {
+      background: #17a2b8;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .blog-btn-info:hover {
+      background: #138496;
+      transform: translateY(-1px);
+    }
+    /* 动画 */
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <a href="../index.html" class="blog-logo">Weitao Jiang</a>
+      <button class="blog-menu-toggle" aria-label="菜单">&#9776;</button>
+      <ul class="blog-nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="index.html">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="#" class="active">管理</a></li>
+        <li><a href="comment-admin.html" id="commentAdminLink" style="display: none;">评论管理</a></li>
+        <li><a href="image-admin.html" id="imageAdminLink" style="display: none;">图片管理</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <div id="userInfo" class="user-info">
+          <span class="username" id="usernameSpan">👋 管理员</span>
+          <button class="logout-btn" onclick="handleLogout()">退出</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="blog-container">
+    <h1 class="page-title">📊 管理控制台</h1>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-number" id="totalPosts">-</div>
+        <div class="stat-label">总文章数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-number" id="totalComments">-</div>
+        <div class="stat-label">总评论数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">B</div>
+        <div class="stat-number" id="totalImageSize">--</div>
+        <div class="stat-label">总文件大小</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👁️</div>
+        <div class="stat-number" id="totalViews">-</div>
+        <div class="stat-label">总访问量</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number" id="totalUsers">-</div>
+        <div class="stat-label">用户数量</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="section-title">📚 文章管理</h2>
+      <div id="postManagement" class="post-list">
+        <div class="loading">正在加载文章...</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="section-title">� 评论管理</h2>
+      <div id="commentManagement" class="post-list">
+        <div class="loading">正在加载评论...</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="section-title">🖼️ 图片管理</h2>
+      <div id="imageManagement" class="post-list">
+        <div class="loading">正在加载图片...</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2 class="section-title">� 修改密码</h2>
+      <form id="changePwdForm" style="max-width:400px; margin:0 auto;">
+        <div class="blog-form-group">
+          <label class="blog-form-label" for="oldPwd">当前密码</label>
+          <input type="password" id="oldPwd" class="blog-form-input" placeholder="请输入当前密码" required>
+        </div>
+        <div class="blog-form-group">
+          <label class="blog-form-label" for="newPwd">新密码</label>
+          <input type="password" id="newPwd" class="blog-form-input" placeholder="请输入新密码" required>
+        </div>
+        <div class="blog-form-group">
+          <label class="blog-form-label" for="confirmPwd">确认新密码</label>
+          <input type="password" id="confirmPwd" class="blog-form-input" placeholder="请再次输入新密码" required>
+        </div>
+        <button type="submit" class="blog-btn blog-btn-primary" style="width:100%;margin-top:1.2rem;">修改密码</button>
+      </form>
+    </div>
+    <div class="admin-section">
+      <h2 class="section-title">��👥 用户管理</h2>
+      <div id="userManagement" class="post-list">
+        <div class="loading">正在加载用户...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="jwt-auth.js"></script>
+  <script src="blog-manager.js"></script>
+  <script>
+    // 汉堡菜单展开/收起+自适应
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggle = document.querySelector('.blog-menu-toggle');
+      var navLinks = document.querySelector('.blog-nav-links');
+      function handleResize() {
+        if (window.innerWidth > 768 && navLinks) {
+          navLinks.classList.remove('open');
+        }
+      }
+      if (toggle && navLinks) {
+        toggle.addEventListener('click', function() {
+          navLinks.classList.toggle('open');
+        });
+        window.addEventListener('resize', handleResize);
+        handleResize(); // 初始执行一次
+      }
+    });
+  </script>
+  <script>
+    // 检查管理员权限
+    function checkAdminAccess() {
+      if (!window.authManager || !window.authManager.isLoggedIn()) {
+        alert('请先登录');
+        location.href = 'index.html';
+        return false;
+      }
+      
+      if (!window.authManager.isAdmin()) {
+        alert('需要管理员权限');
+        location.href = 'index.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // 加载统计数据
+    async function loadStats() {
+      try {
+        const posts = await blogManager.getAllPosts();
+        const comments = await blogManager.getAllComments();
+        // 计算统计数据
+        const totalPosts = posts.length;
+        const totalComments = comments.length;
+        const totalViews = posts.reduce((sum, post) => sum + (post.views || 0), 0);
+
+        // 获取图片总大小
+        let totalImageSize = '--';
+        try {
+          const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+          const res = await fetch('/api/images', { headers, credentials: 'include' });
+          if (res.ok) {
+            const files = await res.json();
+            if (Array.isArray(files) && files.length > 0) {
+              const total = files.reduce((sum, f) => sum + (f.size || 0), 0);
+              totalImageSize = formatSize(total);
+            } else {
+              totalImageSize = '0 B';
+            }
+          }
+        } catch {}
+
+        // 获取用户总数
+        let totalUsers = '-';
+        try {
+          const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+          const res = await fetch('/api/users', { headers, credentials: 'include' });
+          if (res.ok) {
+            const result = await res.json();
+            totalUsers = result.users ? result.users.length : 0;
+          }
+        } catch {}
+
+        // 更新显示
+        document.getElementById('totalPosts').textContent = totalPosts;
+        document.getElementById('totalComments').textContent = totalComments;
+        document.getElementById('totalViews').textContent = totalViews;
+        document.getElementById('totalImageSize').textContent = totalImageSize;
+        document.getElementById('totalUsers').textContent = totalUsers;
+      } catch (error) {
+        console.error('加载统计数据失败:', error);
+      }
+    }
+
+    // 格式化文件大小
+    function formatSize(size) {
+      if (!size || isNaN(size)) return '--';
+      if (size < 1024) return size + ' B';
+      if (size < 1024 * 1024) return (size / 1024).toFixed(1) + ' KB';
+      if (size < 1024 * 1024 * 1024) return (size / 1024 / 1024).toFixed(2) + ' MB';
+      return (size / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+    }
+
+    // 加载文章管理列表
+    async function loadPostManagement() {
+      const container = document.getElementById('postManagement');
+      
+      try {
+        const posts = await blogManager.getAllPosts();
+        
+        if (posts.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i>📝</i><p>暂无文章</p></div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        
+        // 按日期排序，最新的在前
+        posts.sort((a, b) => {
+          if (a.date && b.date) {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            if (dateA.getTime() !== dateB.getTime()) {
+              return dateB.getTime() - dateA.getTime();
+            }
+          }
+          return (b.id || 0) - (a.id || 0);
+        });
+
+        posts.forEach(post => {
+          const postElement = document.createElement('div');
+          postElement.className = 'blog-card';
+          postElement.innerHTML = `
+            <div class="blog-content" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem;">
+              <div style="flex:1; min-width:200px;">
+                <div class="blog-title" style="margin-bottom:0.5rem;">${post.title}</div>
+                <div class="blog-meta">
+                  <span class="blog-category">${post.category}</span>
+                  <span class="blog-date">${post.date}</span>
+                  <span class="blog-views">👁️ ${post.views || 0}</span>
+                </div>
+              </div>
+              <div class="post-actions" style="display:flex; gap:0.5rem; align-items:center;">
+                <a href="post.html?id=${post.id}" class="blog-btn blog-btn-primary" style="color:#fff;">查看</a>
+                <a href="write-post.html?edit=${post.id}" class="blog-btn blog-btn-secondary">编辑</a>
+                <button class="blog-btn blog-btn-danger" onclick="deletePost(${post.id})">删除</button>
+              </div>
+            </div>
+          `;
+          container.appendChild(postElement);
+        });
+      } catch (error) {
+        console.error('加载文章失败:', error);
+        container.innerHTML = '<div class="empty-state"><i>❌</i><p>加载失败</p></div>';
+      }
+    }
+
+    // 加载用户管理列表
+    async function loadUserManagement() {
+      const container = document.getElementById('userManagement');
+      
+      try {
+        // 从服务器获取用户数据
+        const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+        const response = await fetch('/api/users', { 
+          headers, 
+          credentials: 'include' 
+        });
+        
+        if (!response.ok) {
+          throw new Error('获取用户列表失败');
+        }
+        
+        const result = await response.json();
+        const users = result.users || [];
+
+        if (users.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i>👥</i><p>暂无用户</p></div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        
+        users.forEach(user => {
+          const userElement = document.createElement('div');
+          userElement.className = 'blog-card';
+          userElement.innerHTML = `
+            <div class="blog-content" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem;">
+              <div style="flex:1; min-width:200px;">
+                <div class="blog-title" style="margin-bottom:0.5rem;">${user.username}</div>
+                <div class="blog-meta">
+                  <span class="blog-category">${user.role}</span>
+                  <span class="blog-date">${user.email || '未设置邮箱'}</span>
+                  <span class="blog-views">最后登录: ${user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : '从未登录'}</span>
+                </div>
+                <div class="blog-excerpt" style="margin-top:0.5rem;">
+                  创建时间: ${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '未知'}
+                  ${user.isActive ? '' : ' • <span style="color:#dc3545;">已禁用</span>'}
+                </div>
+              </div>
+              <div class="post-actions" style="display:flex; gap:0.5rem; align-items:center;">
+                <button class="blog-btn blog-btn-secondary" onclick="editUser(${user.id})">编辑</button>
+                <button class="blog-btn blog-btn-info" onclick="resetUserPassword(${user.id})">重置密码</button>
+                ${user.role !== 'admin' ? `<button class="blog-btn blog-btn-danger" onclick="deleteUser(${user.id})">删除</button>` : ''}
+              </div>
+            </div>
+          `;
+          container.appendChild(userElement);
+        });
+        
+        // 添加创建用户按钮
+        const addUserButton = document.createElement('div');
+        addUserButton.className = 'blog-card';
+        addUserButton.style.cssText = 'border: 2px dashed var(--primary-color); cursor: pointer; transition: all 0.3s ease;';
+        addUserButton.innerHTML = `
+          <div class="blog-content" style="text-align: center; padding: 2rem;">
+            <div style="color: var(--primary-color); font-size: 3rem; margin-bottom: 1rem;">➕</div>
+            <div style="color: var(--primary-color); font-size: 1.2rem; font-weight: bold;">添加新用户</div>
+          </div>
+        `;
+        addUserButton.addEventListener('click', showAddUserDialog);
+        addUserButton.addEventListener('mouseenter', () => {
+          addUserButton.style.transform = 'translateY(-3px)';
+          addUserButton.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.3)';
+        });
+        addUserButton.addEventListener('mouseleave', () => {
+          addUserButton.style.transform = 'translateY(0)';
+          addUserButton.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+        });
+        container.appendChild(addUserButton);
+
+      } catch (error) {
+        console.error('加载用户失败:', error);
+        container.innerHTML = '<div class="empty-state"><i>❌</i><p>加载失败: ' + error.message + '</p></div>';
+      }
+    }
+
+    // 删除文章
+    async function deletePost(id) {
+      if (!confirm('确定要删除这篇文章吗？此操作不可恢复！')) {
+        return;
+      }
+
+      try {
+        await blogManager.deletePost(id);
+        showMessage('文章删除成功', 'success');
+        await loadPostManagement();
+        await loadStats();
+      } catch (error) {
+        console.error('删除文章失败:', error);
+        showMessage('删除文章失败: ' + error.message, 'error');
+      }
+    }
+
+    // 编辑用户
+    function editUser(id) {
+      showMessage('用户编辑功能开发中...', 'info');
+    }
+
+    // 重置用户密码
+    async function resetUserPassword(id) {
+      if (!confirm('确定要重置该用户的密码吗？新密码将设置为默认密码。')) {
+        return;
+      }
+      showMessage('密码重置功能开发中...', 'info');
+    }
+
+    // 删除用户
+    async function deleteUser(id) {
+      if (!confirm('确定要删除这个用户吗？此操作不可恢复！')) {
+        return;
+      }
+      showMessage('用户删除功能开发中...', 'info');
+    }
+
+    // 显示添加用户对话框
+    function showAddUserDialog() {
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+      `;
+
+      const dialog = document.createElement('div');
+      dialog.style.cssText = `
+        background: var(--dark-bg);
+        color: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        width: 400px;
+        max-width: 90vw;
+        border: 1px solid var(--primary-color);
+      `;
+
+      dialog.innerHTML = `
+        <h3 style="margin-top: 0; text-align: center; color: var(--primary-color);">添加新用户</h3>
+        <form id="addUserForm">
+          <div class="blog-form-group">
+            <label class="blog-form-label" for="newUsername">用户名:</label>
+            <input type="text" id="newUsername" class="blog-form-input" placeholder="请输入用户名" required>
+          </div>
+          <div class="blog-form-group">
+            <label class="blog-form-label" for="newUserEmail">邮箱:</label>
+            <input type="email" id="newUserEmail" class="blog-form-input" placeholder="请输入邮箱 (可选)">
+          </div>
+          <div class="blog-form-group">
+            <label class="blog-form-label" for="newUserPassword">密码:</label>
+            <input type="password" id="newUserPassword" class="blog-form-input" placeholder="请输入密码" required>
+          </div>
+          <div class="blog-form-group">
+            <label class="blog-form-label" for="newUserRole">角色:</label>
+            <select id="newUserRole" class="blog-form-input" required>
+              <option value="user">普通用户</option>
+              <option value="editor">编辑</option>
+              <option value="admin">管理员</option>
+            </select>
+          </div>
+          <div id="addUserErrorMsg" style="color: #dc3545; margin-bottom: 1rem; display: none;"></div>
+          <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="blog-btn blog-btn-primary" style="flex: 1;">创建用户</button>
+            <button type="button" id="cancelAddUser" class="blog-btn blog-btn-secondary" style="flex: 1;">取消</button>
+          </div>
+        </form>
+      `;
+
+      overlay.appendChild(dialog);
+      document.body.appendChild(overlay);
+
+      const form = dialog.querySelector('#addUserForm');
+      const errorMsg = dialog.querySelector('#addUserErrorMsg');
+      const cancelBtn = dialog.querySelector('#cancelAddUser');
+
+      const cleanup = () => {
+        document.body.removeChild(overlay);
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = dialog.querySelector('#newUsername').value.trim();
+        const email = dialog.querySelector('#newUserEmail').value.trim();
+        const password = dialog.querySelector('#newUserPassword').value;
+        const role = dialog.querySelector('#newUserRole').value;
+
+        if (!username || !password) {
+          errorMsg.textContent = '用户名和密码不能为空';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        if (password.length < 6) {
+          errorMsg.textContent = '密码长度至少6位';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        try {
+          const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+          headers['Content-Type'] = 'application/json';
+          
+          const response = await fetch('/api/users', {
+            method: 'POST',
+            headers,
+            credentials: 'include',
+            body: JSON.stringify({
+              username,
+              email,
+              password,
+              role,
+              permissions: role === 'admin' ? ['read', 'write', 'admin'] : ['read']
+            })
+          });
+
+          const result = await response.json();
+          
+          if (result.success) {
+            cleanup();
+            showMessage('用户创建成功', 'success');
+            await loadUserManagement();
+          } else {
+            errorMsg.textContent = result.error || '创建用户失败';
+            errorMsg.style.display = 'block';
+          }
+        } catch (error) {
+          errorMsg.textContent = '网络错误: ' + error.message;
+          errorMsg.style.display = 'block';
+        }
+      });
+
+      cancelBtn.addEventListener('click', cleanup);
+
+      // 点击背景关闭
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          cleanup();
+        }
+      });
+
+      // 聚焦到用户名输入框
+      setTimeout(() => dialog.querySelector('#newUsername').focus(), 100);
+    }
+
+    // 显示消息提示
+    function showMessage(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#bfa940'};
+        color: ${type === 'info' ? '#2c2c2c' : 'white'};
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
+        font-weight: 600;
+        animation: slideIn 0.3s ease-out;
+      `;
+      toast.textContent = message;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.remove();
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // 处理退出登录
+    function handleLogout() {
+      if (confirm('确定要退出登录吗？')) {
+        if (window.authManager) {
+          window.authManager.logout();
+          alert('已退出登录');
+          location.href = 'index.html';
+        }
+      }
+    }
+
+    // 加载评论管理列表
+    async function loadCommentManagement() {
+      const container = document.getElementById('commentManagement');
+      try {
+        const comments = await blogManager.getAllComments();
+        if (!comments || comments.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i>💬</i><p>暂无评论</p></div>';
+          return;
+        }
+        container.innerHTML = '';
+        comments.forEach(comment => {
+          const commentElement = document.createElement('div');
+          commentElement.className = 'blog-card';
+          commentElement.innerHTML = `
+            <div class="blog-content" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem;">
+              <div style="flex:1; min-width:200px;">
+                <div class="blog-title" style="margin-bottom:0.5rem;">${comment.author || '匿名'}</div>
+                <div class="blog-meta">
+                  <span class="blog-date">${comment.date || ''}</span>
+                  <span class="blog-category">${comment.postTitle ? '文章: ' + comment.postTitle : ''}</span>
+                </div>
+                <div class="blog-excerpt" style="margin-top:0.5rem;">${comment.content || ''}</div>
+              </div>
+              <div class="post-actions" style="display:flex; gap:0.5rem; align-items:center;">
+                <button class="blog-btn blog-btn-danger" onclick="deleteComment(${comment.id})">删除</button>
+              </div>
+            </div>
+          `;
+          container.appendChild(commentElement);
+        });
+      } catch (error) {
+        console.error('加载评论失败:', error);
+        container.innerHTML = '<div class="empty-state"><i>❌</i><p>加载失败</p></div>';
+      }
+    }
+
+    // 加载图片管理列表（直接请求 /api/images，与 image-admin.html 一致）
+    async function loadImageManagement() {
+      const container = document.getElementById('imageManagement');
+      container.innerHTML = '<div class="loading">正在加载图片...</div>';
+      try {
+        const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+        const res = await fetch('/api/images', { headers, credentials: 'include' });
+        if (!res.ok) throw new Error('获取图片失败');
+        const files = await res.json();
+        if (!Array.isArray(files) || files.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i>🖼️</i><p>暂无图片</p></div>';
+          return;
+        }
+        container.innerHTML = '';
+        files.forEach(file => {
+          const imgElement = document.createElement('div');
+          imgElement.className = 'blog-card';
+          imgElement.innerHTML = `
+            <div class="blog-content" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem;">
+              <div style="flex:1; min-width:200px; display:flex; align-items:center; gap:1rem;">
+                <img src="/uploads/${file.filename}" alt="图片" style="width:60px; height:60px; object-fit:cover; border-radius:5px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+                <div>
+                  <div class="blog-title" style="margin-bottom:0.5rem;">${file.filename || '图片'}</div>
+                  <div class="blog-meta">
+                    <span class="blog-date">${file.date || ''}</span>
+                    <span class="blog-category">${file.size ? (file.size/1024).toFixed(1) + 'KB' : ''}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="post-actions" style="display:flex; gap:0.5rem; align-items:center;">
+                <a href="/uploads/${file.filename}" target="_blank" class="blog-btn blog-btn-primary" style="color:#fff;">查看</a>
+                <button class="blog-btn blog-btn-danger" onclick="deleteImage('${file.filename}')">删除</button>
+              </div>
+            </div>
+          `;
+          container.appendChild(imgElement);
+        });
+      } catch (error) {
+        console.error('加载图片失败:', error);
+        container.innerHTML = '<div class="empty-state"><i>❌</i><p>加载失败</p></div>';
+      }
+    }
+
+    // 删除评论
+    async function deleteComment(id) {
+      if (!confirm('确定要删除这条评论吗？')) return;
+      try {
+        if (blogManager.deleteComment) {
+          await blogManager.deleteComment(id);
+          showMessage('评论删除成功', 'success');
+          await loadCommentManagement();
+        } else {
+          showMessage('未实现评论删除接口', 'error');
+        }
+      } catch (error) {
+        showMessage('删除评论失败: ' + error.message, 'error');
+      }
+    }
+
+    // 删除图片
+    async function deleteImage(id) {
+      if (!confirm('确定要删除这张图片吗？')) return;
+      try {
+        if (blogManager.deleteImage) {
+          await blogManager.deleteImage(id);
+          showMessage('图片删除成功', 'success');
+          await loadImageManagement();
+        } else {
+          showMessage('未实现图片删除接口', 'error');
+        }
+      } catch (error) {
+        showMessage('删除图片失败: ' + error.message, 'error');
+      }
+    }
+
+    // 页面初始化和修改密码功能
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        if (window.authManager) {
+          await window.authManager.waitForInit();
+        }
+        if (!checkAdminAccess()) return;
+        const user = window.authManager.getCurrentUser();
+        if (user) {
+          document.getElementById('usernameSpan').textContent = `👋 ${user.username}`;
+        }
+        await blogManager.loadData();
+        await Promise.all([
+          loadStats(),
+          loadPostManagement(),
+          loadCommentManagement(),
+          loadImageManagement(),
+          loadUserManagement()
+        ]);
+
+        // 绑定修改密码表单事件
+        const form = document.getElementById('changePwdForm');
+        if (form) {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const oldPwd = document.getElementById('oldPwd').value.trim();
+            const newPwd = document.getElementById('newPwd').value.trim();
+            const confirmPwd = document.getElementById('confirmPwd').value.trim();
+            if (!oldPwd || !newPwd || !confirmPwd) {
+              showMessage('请填写所有字段', 'error');
+              return;
+            }
+            if (newPwd !== confirmPwd) {
+              showMessage('两次输入的新密码不一致', 'error');
+              return;
+            }
+            try {
+              if (!window.authManager || typeof window.authManager.changePassword !== 'function') {
+                showMessage('未找到密码修改接口', 'error');
+                return;
+              }
+              const result = await window.authManager.changePassword(oldPwd, newPwd);
+              if (!result.success) {
+                showMessage('修改失败: ' + (result.error || '未知错误'), 'error');
+                return;
+              }
+              showMessage('密码修改成功', 'success');
+              form.reset();
+            } catch (err) {
+              showMessage('请求失败: ' + err.message, 'error');
+            }
+          });
+        }
+      } catch (error) {
+        console.error('页面初始化失败:', error);
+        showMessage('页面加载失败，请刷新重试', 'error');
+      }
+    });
+
+    // 添加CSS动画
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

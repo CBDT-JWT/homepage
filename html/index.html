@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <link rel="icon" type="image/jpeg" href="./assets/avatar.jpg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CBDT的小窝</title>
+  <style>
+    /* 动画效果 */
+    body {
+      animation: fadeInBody 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .container {
+      animation: slideUpContainer 1.1s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes slideUpContainer {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .card, .button-row {
+      transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+    }
+    .card {
+      animation: fadeInCard 1.2s 0.2s backwards;
+    }
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .nav-button {
+      transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+      animation: fadeInNavBtn 1.1s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-button:nth-child(1) { animation-delay: 0.2s; }
+    .nav-button:nth-child(2) { animation-delay: 0.35s; }
+    .nav-button:nth-child(3) { animation-delay: 0.5s; }
+    .nav-button:nth-child(4) { animation-delay: 0.65s; }
+    @keyframes fadeInNavBtn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-button:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.32);
+      transform: scale(1.035) translateY(-3px);
+    }
+
+    .flip-container {
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .flip-container:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      transform: scale(1.07) rotateY(8deg);
+    }
+    body {
+  margin: 0;
+  font-family: sans-serif;
+  background: url('assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+}
+
+/* 黑色半透明蒙版 */
+body::before {
+  content: "";
+  position: fixed; /* 全屏固定覆盖 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色 */
+  z-index: -1; /* 保证它在背景图之上、内容之下 */
+  pointer-events: none; /* 不影响页面交互 */
+}
+
+
+    .container {
+      display: flex;
+      gap: 40px;
+      max-width: 1200px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+      backdrop-filter: blur(50px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+
+    .flip-container {
+      perspective: 1000px;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 1rem;
+      cursor: pointer;
+    }
+
+    .flipper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+
+    .flip-container:hover .flipper {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 50%;
+    }
+
+    .front img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #474747;
+    }
+
+    .back {
+      background: #000000;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateY(180deg);
+      font-size: 1.1rem; /* 加大字号 */
+      font-weight: bold; /* 可选：加粗文字 */
+      padding: 0 10px;
+      border-radius: 7px;
+    }
+    
+
+    .flip-container:hover .back {
+      border-radius: 7px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-family: consolas, monospace;
+      color: #fbfbfb;
+    }
+
+    p {
+      color: #fbfbfb;
+      font-size: 1rem;
+      font-family: 'NSimSun', sans-serif;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .contact a {
+      color: #eeeeee;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    .button-row {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 0;
+      width: 100%;
+      max-width: 300px;
+      flex: 1;
+    }
+
+    .nav-button {
+      width: 100%;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 28px;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      color: inherit;
+      font-size: 0.9rem;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-button:active {
+      transform: translateY(0);
+    }
+
+    .button-text {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 300;
+      font-family: 'NSimSun', sans-serif;
+      text-align: left;
+    }
+
+    .button-title {
+      font-size: 1.22rem;
+      font-weight: 800;
+      font-family: 'NSimSun', sans-serif;
+      color: #ffffff;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .button-description {
+      font-size: 0.9rem;
+      color:  #f4f4f4;
+      margin: 4px 0 0 0;
+      opacity: 0.9;
+    }
+
+    .button-arrow {
+      font-size: 1.2rem;
+      color: #f3f3f3;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-button:hover .button-arrow {
+      transform: translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      
+      .container {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .card {
+        max-width: 500px;
+        margin: 0 auto !important;
+      }
+      
+      .button-row {
+        max-width: 500px;
+        margin: 0 auto !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      
+      .container {
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .card {
+        max-width: 250px;
+        padding: 1.5rem;
+        margin: 0 auto !important;
+      }
+      
+      .button-row {
+        max-width: 250px;
+        margin: 0 auto !important;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      .flip-container {
+        width: 80px;
+        height: 80px;
+      }
+      .nav-button {
+        height: 60px;
+        padding: 0 15px;
+        font-size: 1rem;
+      }
+      .button-title {
+        font-size: 1.05rem;
+      }
+      .button-description {
+        font-size: 0.85rem;
+      }
+      .button-row {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 5px;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      
+      .container {
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .card {
+        max-width: 200px;
+        padding: 1rem;
+        margin: 0 auto !important;
+      }
+      
+      .button-row {
+        max-width: 200px;
+        margin: 0 auto !important;
+      }
+      
+      h1 {
+        font-size: 1.3rem;
+      }
+      
+      .flip-container {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .nav-button {
+        height: 50px;
+        padding: 0 12px;
+      }
+      
+      .button-title {
+        font-size: 0.9rem;
+      }
+      
+      .button-description {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* 大屏幕时的左右间距 - 放在最后确保优先级 */
+    @media (min-width: 769px) {
+      .card {
+        margin-right: 20px;
+      }
+      .button-row {
+        margin-left: 20px;
+        max-width: 340px;
+      }
+      .nav-button {
+        max-width: 340px;
+        min-width: 320px;
+        width: 100%;
+      }
+    }
+
+    /* 底栏样式 */
+    .footer-bar {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      /* 半透明黑色线性渐变 */
+      background: linear-gradient(to bottom, rgba(28, 28, 28, 0.85) 0%, rgba(0, 0, 0, 0.65) 100%);
+      color: #fff;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 120px;
+      font-size: 1.08rem;
+      /*backdrop-filter: blur(8px);*/
+    }
+    .footer-content {
+      width: 100%;
+      max-width: 1200px;
+      text-align: center;
+      padding: 0 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .footer-bar a {
+      color: #fff;
+      text-decoration: underline dotted;
+      transition: color 0.2s;
+    }
+    .footer-bar a:hover {
+      color: #66b3ff;
+    }
+    @media (max-width: 600px) {
+      .footer-bar {
+        font-size: 0.92rem;
+        height: 60px;
+      }
+    }
+    @media (max-width: 400px) {
+      .footer-bar {
+        font-size: 0.8rem;
+        height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+<script src="https://www.unpkg.com/mouse-firework@latest/dist/index.umd.js">
+
+</script>
+<script>
+    firework({
+  excludeElements: ["a"],
+  particles: [
+    {
+      shape: "circle",
+      move: "emit",
+      easing: "easeOutExpo",
+      colors: [
+        "rgba(255,182,185,.9)",
+        "rgba(250,227,217,.9)",
+        "rgba(187,222,214,.9)",
+        "rgba(138,198,209,.9)",
+      ],
+      number: 30,
+      duration: [1000,4000],
+      shapeOptions: {
+        radius: [5, 12],
+      },
+    },
+  ]
+});
+</script>
+  <div class="wrapper">
+    <div class="container">
+      <div class="card">
+        <div class="flip-container" onclick="location.href='about-the-author.html'">
+          <div class="flipper">
+            <div class="front">
+              <img src="./assets/avatar.jpg" alt="头像" />
+            </div>
+            <div class="back">
+              关于作者
+            </div>
+          </div>
+        </div>
+        <h1>CBDT的小窝</h1>
+        <p>“一个普通的电子人”</p>
+        <div class="server-days-block" style="margin: 0.5em auto 0.5em auto; width: 100%; max-width: 260px; display: flex; flex-direction: column; align-items: stretch;">
+          <div id="server-days-label" style="text-align:left; font-size:1em; color:#ffffff; font-family:'SimSun';">本站已上线</div>
+          <div id="server-days-num" style="text-align:center; font-size:1.2em; font-weight:bold; color:#fff; line-height:1.1; letter-spacing:2px; margin: 0.1em 0; font-family:consolas,monospace;">--</div>
+            <div id="server-days-unit" style="text-align:right; font-size:0.8em; color:#ffffff; font-family:'SimSun', '宋体', serif;">(自2025年12月10日0:29宿舍有线网上线记)</div>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <a href="blog/index.html" class="nav-button">
+          <div class="button-text">
+            <div class="button-title">我的博客</div>
+            <div class="button-description">随便写写</div>
+          </div>
+          <div class="button-arrow">→</div>
+        </a>
+        <a href="docs-html/index.html" class="nav-button">
+          <div class="button-text">
+            <div class="button-title">学习笔记</div>
+            <div class="button-description">正经(?)内容</div>
+          </div>
+          <div class="button-arrow"><img src="assets/fish-bone.png" alt="鱼骨" height=20 style="filter: invert(1);"/></div>
+        </a>
+        <a href="intro.html" class="nav-button">
+          <div class="button-text">
+            <div class="button-title">关于本站</div>
+            <div class="button-description">网站介绍</div>
+          </div>
+          <div class="button-arrow">→</div>
+        </a>
+        <a href="https://www.travellings.cn/go.html" class="nav-button">
+          <div class="button-text">
+            <div class="button-title">开往</div>
+            <div class="button-description">下一个地方</div>
+          </div>
+            <div class="button-arrow"><img src="assets/train.png" alt="火车" height=20 style="filter: invert(1);"/></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="footer-bar">
+    <div class="footer-content" style="flex-direction: column; align-items: center; justify-content: center;">
+      <span>© 2025 Weitao Jiang &nbsp;|&nbsp; <a href="https://github.com/CBDT-JWT" target="_blank">GitHub</a> &nbsp;|&nbsp; <a href="mailto:wjiang0415@outlook.com">联系作者</a> &nbsp;|&nbsp; <a href="https://icp.gov.moe/?keyword=20251831" target="_blank">萌ICP备20251831号</a></span>
+
+    </div>
+  </footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+// 服务器运行时间精确到秒
+window.addEventListener('DOMContentLoaded', function() {
+  var startDate = new Date('2024-12-10T00:29:00+08:00');
+  function updateUptime() {
+    var now = new Date();
+    // 以东八区为准
+    var offset = 8 * 60;
+    var nowUtc = now.getTime() + now.getTimezoneOffset() * 60000;
+    var nowCst = new Date(nowUtc + offset * 60000);
+    var diff = nowCst - startDate;
+    if (diff < 0) diff = 0;
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    var numEl = document.getElementById('server-days-num');
+    if (numEl) {
+      numEl.textContent = `${days}天 ${hours.toString().padStart(2,'0')}小时 ${minutes.toString().padStart(2,'0')}分 ${seconds.toString().padStart(2,'0')}秒`;
+    }
+  }
+  updateUptime();
+  setInterval(updateUptime, 1000);
+});
+</script>
+</body>
+</html>

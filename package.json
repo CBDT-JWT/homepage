@@ -1,0 +1,39 @@
+{
+  "name": "simple-blog-system",
+  "version": "1.0.0",
+  "description": "A lightweight blog system built with Node.js, supporting Markdown, user authentication, and image uploads",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blog",
+    "nodejs",
+    "markdown",
+    "jwt",
+    "cms",
+    "lightweight",
+    "file-based",
+    "responsive",
+    "katex",
+    "math"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/simple-blog-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/simple-blog-system/issues"
+  },
+  "homepage": "https://github.com/your-username/simple-blog-system#readme"
+}

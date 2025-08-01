@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图片管理 - Weitao Jiang 博客</title>
+  <link rel="stylesheet" href="blog.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      min-height: 100vh;
+      color: #fff;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      background: rgba(44,44,44,0.97);
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+    }
+    h1 {
+      color: #bfa940;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .image-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+    .image-card {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      position: relative;
+    }
+    .image-card img {
+      width: 100%;
+      max-width: 160px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      background: #333;
+    }
+    .image-card .filename {
+      font-size: 0.95rem;
+      color: #bfa940;
+      word-break: break-all;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .image-card .delete-btn {
+      background: rgba(255, 80, 80, 0.15);
+      color: #ff5050;
+      border: 1px solid #ff5050;
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.2rem;
+    }
+    .image-card .delete-btn:hover {
+      background: rgba(255, 80, 80, 0.3);
+    }
+    .upload-section {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .upload-label {
+      display: inline-block;
+      background: #bfa940;
+      color: #2c2c2c;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      transition: background 0.2s;
+    }
+    .upload-label:hover {
+      background: #b37a00;
+    }
+    .upload-input {
+      display: none;
+    }
+    .tip {
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: #bfa940;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: #b37a00;
+    }
+  </style>
+</head>
+<body>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <a href="../index.html" class="blog-logo">Weitao Jiang</a>
+      <ul class="blog-nav-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="index.html">博客</a></li>
+        <li><a href="../docs-html/index.html">笔记</a></li>
+        <li><a href="../about-the-author.html">关于</a></li>
+        <li><a href="admin.html" id="adminLink" style="display: none;">管理</a></li>
+        <li><a href="comment-admin.html" id="commentAdminLink" style="display: none;">评论管理</a></li>
+        <li><a href="image-admin.html" class="active" id="imageAdminLink">图片管理</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <a href="index.html" class="btn btn-primary">返回博客</a>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <h1>图片管理</h1>
+    <div class="upload-section">
+      <label class="upload-label" for="uploadInput">上传图片</label>
+      <input type="file" id="uploadInput" class="upload-input" accept="image/*" multiple />
+      <div class="tip">支持批量上传，图片将保存到服务器指定目录。</div>
+    </div>
+    <div class="total-size" id="totalSize">总大小：--</div>
+    <div class="image-list" id="imageList">
+      <!-- 图片列表将由JS动态加载 -->
+    </div>
+  </div>
+  <script src="jwt-auth.js"></script>
+  <script>
+    // 检查权限
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!window.authManager || !window.authManager.isAdmin || !window.authManager.isAdmin()) {
+        alert('无权限访问图片管理页面');
+        window.location.href = 'index.html';
+        return;
+      }
+      // 显示管理菜单
+      document.getElementById('adminLink').style.display = '';
+      document.getElementById('commentAdminLink').style.display = '';
+      document.getElementById('imageAdminLink').style.display = '';
+      loadImages();
+    });
+
+    // 加载图片列表
+    async function loadImages() {
+      const imageList = document.getElementById('imageList');
+      const totalSizeEl = document.getElementById('totalSize');
+      imageList.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:#bfa940;">正在加载图片...</div>';
+      totalSizeEl.textContent = '总大小：--';
+      try {
+        // 带上 JWT 认证头
+        const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+        const res = await fetch('/api/images', { headers, credentials: 'include' });
+        if (!res.ok) throw new Error('获取图片失败');
+        const files = await res.json();
+        if (!Array.isArray(files) || files.length === 0) {
+          imageList.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:#bfa940;">暂无图片</div>';
+          totalSizeEl.textContent = '总大小：0 B';
+          return;
+        }
+        let total = 0;
+        imageList.innerHTML = '';
+        files.forEach(file => {
+          total += file.size || 0;
+          const card = document.createElement('div');
+          card.className = 'image-card';
+          card.innerHTML = `
+            <img src="/uploads/${file.filename}" alt="${file.filename}" loading="lazy" onerror="this.style.display='none';" />
+            <div class="filename">${file.filename}</div>
+            <div class="size">${formatSize(file.size)}</div>
+            <div class="actions">
+              <button class="rename-btn" onclick="renameImage('${file.filename}')">重命名</button>
+              <button class="delete-btn" onclick="deleteImage('${file.filename}')">删除</button>
+            </div>
+          `;
+          imageList.appendChild(card);
+        });
+        totalSizeEl.textContent = '总大小：' + formatSize(total);
+      } catch (e) {
+        imageList.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:#b37a00;">加载失败</div>';
+      }
+    }
+
+    // 上传图片
+    document.getElementById('uploadInput').addEventListener('change', async function(e) {
+      const files = e.target.files;
+      if (!files.length) return;
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('images', file);
+      }
+      try {
+        const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+        const res = await fetch('/api/images/upload', {
+          method: 'POST',
+          body: formData,
+          credentials: 'include',
+          headers
+        });
+        if (!res.ok) throw new Error('上传失败');
+        alert('上传成功');
+        loadImages();
+      } catch (e) {
+        alert('上传失败');
+      }
+      this.value = '';
+    });
+
+    // 删除图片
+    async function deleteImage(filename) {
+      if (!confirm('确定要删除该图片吗？')) return;
+      try {
+        const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+        const res = await fetch(`/api/images/${encodeURIComponent(filename)}`, {
+          method: 'DELETE',
+          credentials: 'include',
+          headers
+        });
+        if (!res.ok) throw new Error('删除失败');
+        loadImages();
+      } catch (e) {
+        alert('删除失败');
+      }
+    }
+
+    // 重命名图片
+    async function renameImage(filename) {
+      const newName = prompt('请输入新的文件名（包含扩展名）', filename);
+      if (!newName || newName === filename) return;
+      try {
+        const headers = window.authManager ? window.authManager.getAuthHeaders() : {};
+        headers['Content-Type'] = 'application/json';
+        const res = await fetch(`/api/images/${encodeURIComponent(filename)}/rename`, {
+          method: 'POST',
+          headers,
+          credentials: 'include',
+          body: JSON.stringify({ newName })
+        });
+        if (!res.ok) throw new Error('重命名失败');
+        loadImages();
+      } catch (e) {
+        alert('重命名失败');
+      }
+    }
+
+    // 格式化文件大小
+    function formatSize(size) {
+      if (!size || isNaN(size)) return '--';
+      if (size < 1024) return size + ' B';
+      if (size < 1024 * 1024) return (size / 1024).toFixed(1) + ' KB';
+      if (size < 1024 * 1024 * 1024) return (size / 1024 / 1024).toFixed(2) + ' MB';
+      return (size / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+    }
+  </script>
+</body>
+</html>
