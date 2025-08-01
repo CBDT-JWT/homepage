@@ -1,7 +1,10 @@
-# 简单博客系统
+# CBDT的个人主页
 
 我的个人主页。这个代码是copilot写的。后面的内容也是copilot写的。
-
+## 效果展示
+![alt text](assets/40472bc90b29c9ec24a743fe2e1e4288.png)
+![alt text](assets/image.png)
+![alt text](assets/image-1.png)
 ## ✨ 特性
 
 本系统提供了完整的Markdown语法支持，包含KaTeX数学公式渲染功能，让您能够轻松编写包含复杂数学表达式的技术文章。系统采用基于JWT的安全认证机制，确保您的博客内容安全可靠。集成的图片管理系统支持拖拽上传、预览和管理功能，让多媒体内容的发布变得简单直观。

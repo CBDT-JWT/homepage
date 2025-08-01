@@ -12,11 +12,27 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
   <style>
     body {
-      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url(../assets/background.jpg) no-repeat center center fixed;
+      background-size: cover;
       min-height: 100vh;
       color: #fff;
       margin: 0;
-      font-family: 'SimSun', '宋体', serif;
+      position: relative;
+      z-index: 0;
+    }
+    
+    /* 添加黑色半透明蒙版 */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+      pointer-events: none;
     }
     .container {
       max-width: 900px;
@@ -25,7 +41,7 @@
       border-radius: 15px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.18);
       padding: 2.5rem 2rem 2rem 2rem;
-      font-family: 'SimSun', '宋体', serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .back-btn {
       display: inline-block;
@@ -106,6 +122,11 @@
     }
     .article-content h1, .article-content h2, .article-content h3, .article-content h4, .article-content h5, .article-content h6, .article-content ul, .article-content ol, .article-content blockquote, .article-content pre, .article-content code {
       font-family: 'SimSun', '宋体', serif;
+    }
+    
+    /* 确保导航菜单使用现代字体 */
+    .blog-header, .blog-nav, .blog-nav-links, .blog-nav-links a, .blog-logo {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     }
     .article-content a,
     .article-content a:visited {
