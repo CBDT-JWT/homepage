@@ -103,7 +103,6 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 100;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .blog-nav {
@@ -113,14 +112,12 @@ body::before {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .blog-logo {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--white);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-decoration: none;
   transition: var(--transition);
 }
@@ -135,7 +132,6 @@ body::before {
   display: none;
   gap: 2rem;
   list-style: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @media (min-width: 769px) {
@@ -149,7 +145,6 @@ body::before {
   text-decoration: none;
   transition: var(--transition);
   padding: 0.5rem 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 7px;
 }
 
@@ -167,7 +162,6 @@ body::before {
   display: flex;
   gap: 1rem;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .user-info {
@@ -175,18 +169,15 @@ body::before {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .username {
   font-weight: 500;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logout-btn {
   background: rgba(120, 120, 120, 0.5);
   color: var(--white);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 7px;

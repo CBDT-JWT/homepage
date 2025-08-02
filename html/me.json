@@ -1,0 +1,13 @@
+{
+    "name": "江玮陶",
+    "age": 21,
+    "university": "Tsinghua",
+    "major": "Electronic Engineering",
+    "hobbies": [
+        "Programming",
+        "badminton",
+        "music",
+        "hardware"
+    ],
+    "email": "wjiang0415@outlook.com"
+}

@@ -102,24 +102,3 @@ build/
 .rts2_cache_cjs/
 .rts2_cache_es/
 .rts2_cache_umd/
-
-# Deployment and configuration files (personal/sensitive)
-*deploy*.sh
-*config*.env
-deploy-config*
-DEPLOY-GUIDE.md
-install-node.sh
-start-server.sh
-remote-deploy.sh
-safe-deploy.sh
-quick-deploy.sh
-simple-deploy.sh
-blog-deploy.sh
-
-# Personal files
-html/tencent*.txt
-html/cv.pdf
-
-# Test and debug files
-*test.png
-*debug*
