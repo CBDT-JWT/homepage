@@ -70,6 +70,7 @@ sshpass -p "$SERVER_PASSWORD" rsync -avzh \
     --progress \
     --exclude="data/posts.json" \
     --exclude="data/comments.json" \
+    --exclude="data/users.json" \
     --exclude=".git/" \
     --exclude="node_modules/" \
     --exclude="*.log" \

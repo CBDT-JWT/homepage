@@ -13,6 +13,14 @@ cd /root/mysite/web
 # 进入EEnotes目录
 cd /root/mysite/web/EEnotes
 
+#下载
+rm -rf docs
+git clone https://github.com/CBDT-JWT/EEnotes.git
+if [ ! -d "/root/mysite/web/EEnotes/EEnotes" ]; then
+    echo "❌ 错误：/root/mysite/web/EEnotes/EEnotes 目录不存在"
+    exit 1
+fi
+mv /root/mysite/web/EEnotes/EEnotes /root/mysite/web/EEnotes/docs
 # 确保自定义CSS文件同步
 echo "🔄 同步自定义CSS文件..."
 cp themes/css/custom.css stylesheets/custom.css

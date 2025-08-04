@@ -1,0 +1,1288 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://www.jiangwt.org/notes/circuits/">
+      
+      
+        <link rel="prev" href="../LinearAlgebra2/">
+      
+      
+        <link rel="next" href="../../documents/circuitikz/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>电子电路与系统基础 - CBDT的资料屋</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/simpleLightbox.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/pied_piper.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="yellow">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <!-- 自定义导航栏 - 仅在桌面端显示 -->
+    <nav class="custom-blog-nav custom-blog-nav--desktop">
+      <a href="/index.html" class="custom-blog-logo">Weitao Jiang</a>
+      <ul class="custom-blog-nav-links">
+        <li><a href="/index.html">首页</a></li>
+        <li><a href="/blog/index.html">博客</a></li>
+        <li><a href="/docs-html/index.html" class="active">笔记</a></li>
+        <li><a href="https://www.travellings.cn/go.html">开往</a></li>
+      </ul>
+      <div id="authSection" class="auth-buttons">
+        <a href="/blog/admin.html" id="loginBtn" class="blog-btn blog-btn-primary">登录</a>
+      </div>
+    </nav>
+    
+    <!-- 汉堡菜单按钮 - 桌面端 -->
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+  </nav>
+</header>
+
+<!-- 移动端浮动菜单按钮 -->
+<label class="mobile-menu-button md-icon" for="__drawer">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+</label>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CBDT的资料屋" class="md-nav__button md-logo" aria-label="CBDT的资料屋" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CBDT的资料屋
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/blog/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    博客
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    课程笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            课程笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BigPhysics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LinearAlgebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性代数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LinearAlgebra2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性代数2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    电子电路与系统基础
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    电子电路与系统基础
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      元件与器件
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法与工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方法与工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络参量
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="网络参量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络参量矩阵的定义
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      复合网络的参量矩阵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用网络的参量矩阵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络参量的物理意义
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    其他文档
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            其他文档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documents/circuitikz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CircuiTikZ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documents/mkdocs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MkDocs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documents/wanhuachi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    万花尺
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documents/EMgun/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    电磁炮
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.travellings.cn/go.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    开往
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      元件与器件
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法与工具
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="方法与工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络参量
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="网络参量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络参量矩阵的定义
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      复合网络的参量矩阵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用网络的参量矩阵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络参量的物理意义
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">《电子电路与系统基础》学习参考</h1>
+<div class="admonition info">
+<p class="admonition-title">说明</p>
+<p>先开个坑（）放张最喜欢的单管放大器镇楼。后面应该会同步写一下CAD教程
+<img alt="单管放大器" src="../assets/image.png" style="display: block; margin: auto; width: 60%;" />
+（很大程度上）参考了\ycgg/的小班辅导讲义，感谢！这篇文章大概会按照元件器件和方法工具两条主线完成，感觉电电确实就是这么个逻辑</p>
+</div>
+<div class="admonition tips">
+<p class="admonition-title">建议</p>
+<p>目前感觉这个课最有效的方法是背背背+直觉，在大脑里建立又大又快的L1-cache。我当时学（2）的时候把所有的PPT都抄了2遍，差不多背下来了，能80%默写正课内容的程度，感觉对于应试还是非常有效的。考试的时候就直接顺着写了，甚至富裕30分钟。当然还是要提倡先做大题（）</p>
+</div>
+<h2 id="_2">元件与器件</h2>
+<p>《电电》涉及的元件器件主要有</p>
+<ol>
+<li>电阻电容电感，电流电压源，受控源</li>
+<li>二极管，运放</li>
+<li>BJT，MOSFETS</li>
+</ol>
+<h2 id="_3">方法与工具</h2>
+<p>方法和工具主要包括网络参量“小矩阵”（静态分析），三/五要素法（时域分析）和频域分析三个大类。</p>
+<h3 id="_4">网络参量</h3>
+<h4 id="_5">网络参量矩阵的定义</h4>
+<p>首先是<span class="arithmatex">\(zyhg\)</span> 矩阵：</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+v_1 \\\\
+v_2
+\end{bmatrix}=\begin{bmatrix}
+z_{11}&amp;z_{12} \\\\
+z_{21}&amp;z_{22}
+\end{bmatrix}\begin{bmatrix}
+i_1\\\\
+i_2
+\end{bmatrix}\quad\begin{bmatrix}
+i_1 \\\\
+i_2
+\end{bmatrix}=\begin{bmatrix}
+y_{11}&amp;y_{12} \\\\
+y_{21}&amp;y_{22}
+\end{bmatrix}\begin{bmatrix}
+v_1\\\\
+v_2
+\end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+\begin{bmatrix}
+v_1 \\\\
+\textcolor{cyan}{i_2}
+\end{bmatrix}=\begin{bmatrix}
+h_{11}&amp;h_{12} \\\\
+\textcolor{cyan}{h_{21}}&amp;h_{22}
+\end{bmatrix}\begin{bmatrix}
+\textcolor{cyan}{i_1}\\\\
+v_2
+\end{bmatrix}\quad\begin{bmatrix}
+i_1 \\\\
+v_2
+\end{bmatrix}=\begin{bmatrix}
+g_{11}&amp;g_{12} \\\\
+g_{21}&amp;g_{22}
+\end{bmatrix}\begin{bmatrix}
+v_1\\\\
+i_2
+\end{bmatrix}
+\]</div>
+<p>其中<span class="arithmatex">\(z\)</span>和<span class="arithmatex">\(y\)</span>两个矩阵是容易记忆的，和我们熟悉的<strong>欧姆定律</strong>是一致的；<span class="arithmatex">\(h\)</span>和<span class="arithmatex">\(g\)</span>比较难以记忆。</p>
+<div class="admonition tip">
+<p class="admonition-title">记忆方法</p>
+<p>如上公式中<span class="arithmatex">\(\textcolor{cyan}{青色}\)</span>标注。只要记住<strong><span class="arithmatex">\(P_{ij}\)</span>元素对应着<span class="arithmatex">\(i\)</span>端口受到<span class="arithmatex">\(j\)</span>端口的作用</strong>，如<span class="arithmatex">\(\textcolor{cyan}{h_{21}}\)</span>表示<span class="arithmatex">\(2\)</span>端口受到<span class="arithmatex">\(1\)</span>端口的作用，从而对应着“放大器”。而<span class="arithmatex">\(h\)</span>矩阵是<strong>混</strong>合矩阵，由于<strong>混</strong>是<strong>氵</strong>旁，和电流的<strong>流</strong>一样，所以<strong>混</strong>合矩阵对应着<strong>电流</strong>放大器，自然<span class="arithmatex">\(\textcolor{cyan}{h_{21}}\)</span>就对应着<strong>电流放大系数</strong>，即<span class="arithmatex">\(\textcolor{cyan}{i_2}\)</span>受到<span class="arithmatex">\(\textcolor{cyan}{i_1}\)</span>的作用。当然，也可以用<strong>hi</strong>和<strong>gv</strong>两个词来记住这两个矩阵，原理是类似的。<strong>hi</strong>是打招呼的意思，<strong>gv</strong>我也不知道是什么（x</p>
+</div>
+<p>然后是ABCD矩阵：</p>
+<p>$$
+\begin{bmatrix}
+v_1 \\
+i_1
+\end{bmatrix}=\begin{bmatrix}
+A&amp;B \\
+C&amp;D
+\end{bmatrix}\begin{bmatrix}
+v_2\\
+\textcolor{yellow}{-i_2}
+\end{bmatrix}
+$$
+这里又有一个初学难以理解的点：这个<span class="arithmatex">\(\textcolor{yellow}{-i_2}\)</span>的负号如何理解。
+<img alt="alt text" src="../assets/image-3.png" style="display: block; margin: auto; width: 60%;" />
+正如这张图所示，zyhg矩阵研究的是<span class="arithmatex">\(\{v_1\,,v_2\,,i_1\,,i_2\}\)</span>之间的关系，而ABCD矩阵研究的则是<span class="arithmatex">\(\{v_{in}\,,i_{in}\,,v_{out}\,,i_{out}\}\)</span>之间的关系。根据图中定义不难发现<span class="arithmatex">\(i_{out}=\textcolor{yellow}{-i_2}\)</span>。也就是说，<strong>ABCD矩阵本质的定义其实是</strong></p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+v_{in} \\\\
+i_{in}
+\end{bmatrix}=\begin{bmatrix}
+A&amp;B \\\\
+C&amp;D
+\end{bmatrix}\begin{bmatrix}
+v_{out}\\\\
+i_{out}
+\end{bmatrix}
+\]</div>
+<h4 id="_6">复合网络的参量矩阵</h4>
+<p>这样定义的好处是，如果我们考虑两个级联的系统，那么就有<strong>“级联ABCD相乘”</strong>。</p>
+<p><img alt="alt text" src="../assets/image-5.png" style="display: block; margin: auto; width: 60%;" />
+$$
+\begin{aligned}
+\begin{bmatrix}
+v_{in} \\
+i_{in}
+\end{bmatrix}&amp;=\begin{bmatrix}
+A_1&amp;B_1 \\
+C_1&amp;D_1
+\end{bmatrix}\begin{bmatrix}
+v_{out1}\\
+i_{out1}
+\end{bmatrix}\\&amp;=\begin{bmatrix}
+A_1&amp;B_1 \\
+C_1&amp;D_1
+\end{bmatrix}\begin{bmatrix}
+v_{in2}\\
+i_{in2}
+\end{bmatrix}\\
+&amp;=\begin{bmatrix}
+A_1&amp;B_1 \\
+C_1&amp;D_1
+\end{bmatrix}\begin{bmatrix}
+A_2&amp;B_2 \\
+C_2&amp;D_2
+\end{bmatrix}\begin{bmatrix}
+v_{out}\\
+i_{out}
+\end{bmatrix}
+\end{aligned}
+$$
+因此
+$$
+\begin{bmatrix}
+A&amp;B \\
+C&amp;D
+\end{bmatrix}=\begin{bmatrix}
+A_1&amp;B_1 \\
+C_1&amp;D_1
+\end{bmatrix}\begin{bmatrix}
+A_2&amp;B_2 \\
+C_2&amp;D_2
+\end{bmatrix}
+$$</p>
+<p>用类似的方法可以推导经典的口诀：<strong>“串串相连z相加，并并相连y相加，串并相连h相加，并串相连g相加”。</strong>
+<img alt="alt text" src="../assets/image-6.png" style="display: block; margin: auto; width: 60%;" />
+以h矩阵为例，上图中不难发现
+$$
+i_{1A}=i_{1B}\,,v_{2A}=v_{2B}\,,
+$$
+同时又有
+$$
+v_1=v_{1A}+v_{1B}\,,i_2=i_{2A}+i_{2B}\,,
+$$
+所以
+$$
+\begin{aligned}
+\begin{bmatrix}
+v_1\\ i_2
+\end{bmatrix}&amp;=
+\begin{bmatrix}
+v_{1A}\\ i_{2A}
+\end{bmatrix}+\begin{bmatrix}
+v_{1B}\\ i_{2B}
+\end{bmatrix}
+\\
+&amp;=\begin{bmatrix}
+h_{11A}&amp;h_{12A}\\
+h_{21A}&amp;h_{22A}
+\end{bmatrix}\begin{bmatrix}
+i_1\\ v_2
+\end{bmatrix}
++\begin{bmatrix}
+h_{11B}&amp;h_{12B}\\
+h_{21B}&amp;h_{22B}
+\end{bmatrix}\begin{bmatrix}
+i_1\\ v_2
+\end{bmatrix}\\
+&amp;=\begin{bmatrix}
+h_{11A}+h_{11B}&amp;h_{12A}+h_{12B}\\
+h_{21A}+h_{21B}&amp;h_{22A}+h_{22B}
+\end{bmatrix}\begin{bmatrix}
+i_1\\ v_2
+\end{bmatrix}
+\end{aligned}
+$$
+进而<span class="arithmatex">\(h=h_A+h_B\,.\)</span>用类似方法不难证明剩下三种情况，在此略过。</p>
+<h4 id="_7">常用网络的参量矩阵</h4>
+<p>首先是常用的串臂电阻和并臂电导，也就是挂在嘴边的"1z01, 10y1"。如下图：
+<img alt="alt text" src="../assets/image-7.png" style="display: block; margin: auto; width: 60%;" />
+两个电路的ABCD参量分别为
+$$
+ABCD_\text{串臂}=\begin{bmatrix}
+1 &amp; Z\\
+0 &amp; 1
+\end{bmatrix}\,,ABCD_\text{并臂}=\begin{bmatrix}
+1 &amp; 0\\
+Y &amp; 1
+\end{bmatrix}
+$$
+记住这一点结合之前提到的<strong>“级联ABCD相乘”</strong>，可以快速计算梯形网络的ABCD矩阵，进而得到很多性质。这两个网络的zyhg矩阵也很重要,应当记忆。
+$$
+Z_\text{串臂}=\begin{bmatrix}
+Z &amp; Z\\
+Z &amp; Z
+\end{bmatrix}\,,Z_\text{并臂}不存在\,;
+$$
+$$
+Y_\text{串臂}不存在\,,Y_\text{并臂}=\begin{bmatrix}
+Y &amp; Y\\
+Y &amp; Y
+\end{bmatrix}\,;
+$$</p>
+<p>然后是同样常见的线性受控源模型。利用戴维南-诺顿定理不难证明下列电路的等价性。
+<img alt="alt text" src="../assets/image-13.png" style="display: block; margin: auto; width: 60%;" /></p>
+<h4 id="_8">网络参量的物理意义</h4>
+<p>直接观察矩阵的形式不利于初学者理解网络参量各个元素的物理意义，因此我们不妨把矩阵展开。以h参量为例：
+$$
+\begin{bmatrix}
+v_1\\ i_2
+\end{bmatrix}=
+\begin{bmatrix}
+h_{11} &amp; h_{12}\\
+h_{21} &amp; h_{22}
+\end{bmatrix}
+\begin{bmatrix}
+i_1\\ v_2
+\end{bmatrix}
+$$
+展开得到
+$$
+\begin{cases}
+v_1=h_{11}i_1+h_{12}v_2\\
+i_2=h_{21}i_1+h_{22}v_2
+\end{cases}
+$$
+从而</p>
+<div class="arithmatex">\[
+\begin{cases}
+h_{11}=\frac{v_1}{i_1} \big |_{v_2=0}\quad v_2置0时的输入阻抗\\\\
+h_{22}=\frac{i_2}{v_1} \big |_{i_1=0}\quad i_1置0时的输出导纳\\\\
+h_{21}=\frac{i_2}{i_1} \big |_{v_2=0}\quad v_2置0时的电流放大系数\\\\
+h_{22}=\frac{i_2}{v_2} \big |_{i_1=0}\quad i_1置0时的电压反馈系数
+\end{cases}
+\]</div>
+<p>对于剩下三个矩阵也是类似的原理：11元素是输入xx，22元素是输出xx，21元素是xx放大系数，12元素是xx反馈系数。有了这一点之后可以记忆一个也很常用的公式：<strong>基于zyhg矩阵给出传递函数。</strong></p>
+<p>首先对于单向网络<span class="arithmatex">\(p_{12}=0\)</span>,传递函数是容易写出的。还是以h矩阵为例，考虑这样的电路：</p>
+<p><img alt="alt text" src="../assets/image-12.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>那么上图中的传递函数可以简单写成
+$$
+\begin{aligned}
+H_{单向}=\frac{v_L}{v_S}&amp;=\textcolor{yellow}{\frac{i_{in}}{v_S}}\cdot
+\textcolor{cyan}{\frac{i_{out}}{i_{in}}}\cdot\textcolor{pink}{\frac{v_L}{i_{out}}}\\
+&amp;=\textcolor{yellow}{\frac{1}{R_S+h_{11}}}\cdot\textcolor{cyan}{-h_{21}}\cdot\textcolor{pink}{\frac{1}{h_{22}+G_L}}\\
+&amp;=\frac{-h_{21}}{(R_S+h_{11})(h_{22}+G_{L})}
+\end{aligned}
+$$
+然后记住<strong>双向化方法</strong>，对于每一种矩阵，处理方法都是<strong>在分母上减去<span class="arithmatex">\(p_{12}p_{21}\)</span></strong>。即此例中
+$$
+H_{双向}=\frac{-h_{21}}{(R_S+h_{11})(h_{22}+G_{L})\textcolor{cyan}{-h_{12}h_{21}}}
+$$
+就可以随手推公式了。</p>
+<p>之前提到ABCD矩阵也有其意义，我们不妨同样地进行展开。
+$$
+\begin{bmatrix}
+v_{in}\\ i_{in}
+\end{bmatrix}
+=\begin{bmatrix}
+A &amp; B\\
+C &amp; D
+\end{bmatrix}\begin{bmatrix}
+v_{out}\\ i_{out}
+\end{bmatrix}
+$$</p>
+<div class="arithmatex">\[
+\begin{cases}
+v_{in}=Av_{out}+Bi_{out}\\\\
+i_{in}=Cv_{out}+Di_{out}
+\end{cases}
+\]</div>
+<p>于是</p>
+<div class="arithmatex">\[
+\begin{cases}
+\frac{1}{A}=\frac{v_{out}}{v_{in}}\big |_{i_{out}=0}\quad本征电压增益A_{v0}=g_{21}\\\\
+\frac{1}{D}=\frac{i_{out}}{v_{in}}\big |_{v_{out}=0}\quad本征电流增益A_{i0}=-h_{21}\\\\
+\frac{1}{C}=\frac{v_{out}}{i_{in}}\big |_{i_{out}=0}\quad本征跨阻增益R_{m0}=z_{21}\\\\
+\frac{1}{B}=\frac{i_{out}}{i_{in}}\big |_{v_{out}=0}\quad本征跨导增益G_{m0}=-y_{21}
+\end{cases}
+\]</div>
+<div class="admonition important">
+<p class="admonition-title">ABCD参量求传函</p>
+<p>这里一个小方法就是利用ABCD参量求梯形网络的传递函数，利用上面提到串臂并臂网络的ABCD参数结合电压增益<span class="arithmatex">\(A_v=\frac 1 A\)</span>就可以轻松求得。例如下图中
+<img alt="alt text" src="../assets/image-14.png" style="display: block; margin: auto; width: 60%;" /></p>
+<p>可以轻松获得ABCD参量（注意我们只关心A元素）为
+$$
+\begin{aligned}
+    \begin{bmatrix}
+    A &amp; B \\
+    C &amp; D
+    \end{bmatrix}
+    &amp;=\begin{bmatrix}
+    1 &amp; \frac{1}{sC_1}\\
+    0 &amp; 1
+    \end{bmatrix}\begin{bmatrix}
+    1 &amp; 0\\
+    \frac{1}{R_1} &amp; 1
+    \end{bmatrix}\begin{bmatrix}
+    1 &amp; R_2\\
+    0 &amp; 1
+    \end{bmatrix}\begin{bmatrix}
+    1 &amp; 0\\
+    sC_2 &amp; 1
+    \end{bmatrix}\\
+    &amp;=\begin{bmatrix}
+    1+\frac{1}{sC_1R_1} &amp; \frac{1}{sC_1}\\
+    \star &amp; \star
+    \end{bmatrix}\begin{bmatrix}
+    1+sC_2R_2 &amp; \star \\
+    sC_2 &amp; \star
+    \end{bmatrix}\\
+    &amp;=\begin{bmatrix}
+    1+\frac{C_2R_2}{C_1R_1}+\frac{1}{sC_1R_1}+sC_2R_2+\frac{C_2}{C_1} &amp; \star \\
+    \star &amp; \star
+    \end{bmatrix}
+\end{aligned}
+$$
+进而电压传递函数
+$$
+\begin{aligned}
+H&amp;=A_v=\frac{1}{A}\\
+&amp;=\frac{1}{ 1+\frac{C_2R_2}{C_1R_1}+\frac{1}{sC_1R_1}+sC_2R_2+\frac{C_2}{C_1}}\,.
+\end{aligned}
+$$
+比KCL/KVL要快很多。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+        <script src="../../javascripts/navigation.js"></script>
+      
+        <script src="../../javascripts/custom.js"></script>
+      
+        <script src="../../javascripts/simpleLightbox.min.js"></script>
+      
+        <script src="../../javascripts/optionalConfig.js"></script>
+      
+        <script src="../../javascripts/mermaidloader.js"></script>
+      
+        <script src="../../javascripts/umlconvert.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
